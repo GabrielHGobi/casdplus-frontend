@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   logoContainer: {
-    flex: 4,
+    flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 16
   },
@@ -42,11 +42,10 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   formContainer: {
-    flex: 6,
+    flex: 1,
     backgroundColor: 'white',
     borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    justifyContent: 'space-around'
+    borderTopRightRadius: 30
   }
 });
 

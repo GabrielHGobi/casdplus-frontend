@@ -4,7 +4,7 @@ import Paint from '../../assets/svg/SvgPaint';
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
 
-const PaintButton = ({ buttonText, primaryColor, secundaryColor, onPress }) => {
+const PaintButton = ({ buttonText, primaryColor, secundaryColor, onPress, style }) => {
     
     const [buttonColor, setButtonColor] = useState(primaryColor)
 
@@ -18,7 +18,7 @@ const PaintButton = ({ buttonText, primaryColor, secundaryColor, onPress }) => {
       } else {
 
         return (
-            <View>
+            <View style={style}>
                 <TouchableOpacity 
                     style={styles.button}
                     onPress={onPress} 
@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     button: {
         justifyContent: 'center',
         alignItems: 'center',
+        alignSelf: 'center'
     },
     text: {
         position: 'absolute',

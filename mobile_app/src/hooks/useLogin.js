@@ -1,10 +1,6 @@
-import { useState } from "react";
 import api_name from '../api/api_name'
 
 export default () => {
-
-    const [errorMsg, setErrorMsg] = useState('');
-    const [errorType, setErrorType] = useState('');
 
     const authenticateAPI = async (login, password) => {
         console.log(login);
@@ -17,10 +13,9 @@ export default () => {
             }
           });
         } catch (err) {
-          setErrorMsg('Bora trabalhar, @Back');
-          setErrorType('login');
+
         }
       };
 
-    return [errorMsg, errorType, authenticateAPI];
+    return [authenticateAPI];
 }
