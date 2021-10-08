@@ -5,7 +5,7 @@ import LoginForms from '../components/LoginForms';
 
 const bg_image = require('../../assets/aprovados.png');
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
 
   return (
     <>
@@ -16,7 +16,7 @@ const LoginScreen = () => {
             <Image style={styles.logo} source={require('../../assets/casd-plus.png')} />
           </View>
           <View style={styles.formContainer}>
-            <LoginForms />
+            <LoginForms navigation={navigation}/>
           </View>
         </View>
       </ImageBackground>

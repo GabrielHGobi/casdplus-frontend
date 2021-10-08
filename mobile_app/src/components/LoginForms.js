@@ -6,7 +6,7 @@ import { useFonts } from 'expo-font';
 import PaintButton from '../components/PaintButton';
 import useLogin from '../hooks/useLogin';
 
-const LoginForms = () => {
+const LoginForms = ({ navigation }) => {
 
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
@@ -57,7 +57,10 @@ const LoginForms = () => {
                     buttonText="Entrar" 
                     primaryColor='#3192b3' 
                     secundaryColor='#f9b342' 
-                    onPress={() => authenticateAPI(login, password)}
+                    onPress={() => {
+                        authenticateAPI(login, password);
+                        navigation.navigate('Home');
+                    }}
                 />
                 <TouchableOpacity style={{alignSelf: 'center', marginTop: 10}}>
                     <Text style={styles.pswReminder}>Esqueci a senha</Text>
