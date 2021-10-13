@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -9,6 +9,8 @@ import {
 } from "react-native";
 
 import ScreenCard from "../components/ScreenCard";
+
+import useStudent from "../hooks/useStudent";
 
 const home_bg = require("../../assets/home_bg.png");
 const logo_casdvest = require("../../assets/logo_casdvest.png");
@@ -39,8 +41,15 @@ const cardProps = {
     img: require("../../assets/absence_img.png"),
   },
 };
+
 const HomeScreen = ({ navigation }) => {
-  const fulano = "Fernando";
+  const [getStudentInfo, info] = useStudent();
+  const [name, setName] = useState("");
+
+  /*  useEffect(() => {
+    getStudentInfo();
+  }, []);
+ */
   return (
     <>
       <ImageBackground //TODO: fix the background
@@ -51,12 +60,15 @@ const HomeScreen = ({ navigation }) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.logoContainer}>
             <Image source={logo_casdvest} style={styles.logo} />
-            <Text style={styles.logoText}>Bem-vindo, {fulano}!</Text>
+            <Text style={styles.logoText}>Bem-vindo, {name}!</Text>
           </View>
           <View style={styles.cardContainer}>
             <ScreenCard
               cardProps={cardProps.AbscenseCard}
-              navigate={() => navigation.navigate("Absence")}
+              navigate={() => {
+                getStudentInfo();
+                setName(info.first_name);
+              }}
             />
             <ScreenCard
               cardProps={cardProps.ScheduleCard}

@@ -6,15 +6,15 @@ export default () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
+  [studentAPI, setToken] = CASDplus_student();
+
   const authenticateAPI = async () => {
     try {
-      const response = await CASDplus_student.get("/login", {
-        params: {
-          username: login,
-          password: password,
-        },
+      const response = await studentAPI.post("/login", {
+        username: login,
+        password: password,
       });
-      console.log(response);
+      setToken(response.data.token);
     } catch (err) {
       console.log(err.message);
     }
