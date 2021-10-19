@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -9,8 +9,6 @@ import {
 } from "react-native";
 
 import ScreenCard from "../components/ScreenCard";
-
-import useStudent from "../hooks/useStudent";
 
 const home_bg = require("../../assets/home_bg.png");
 const logo_casdvest = require("../../assets/logo_casdvest.png");
@@ -43,13 +41,8 @@ const cardProps = {
 };
 
 const HomeScreen = ({ navigation }) => {
-  const [getStudentInfo, info] = useStudent();
-  const [name, setName] = useState("");
+  const [name, setName] = useState("NOME_ALUNO");
 
-  /*  useEffect(() => {
-    getStudentInfo();
-  }, []);
- */
   return (
     <>
       <ImageBackground //TODO: fix the background
@@ -66,8 +59,7 @@ const HomeScreen = ({ navigation }) => {
             <ScreenCard
               cardProps={cardProps.AbscenseCard}
               navigate={() => {
-                getStudentInfo();
-                setName(info.first_name);
+                navigation.navigate("Absence");
               }}
             />
             <ScreenCard
@@ -91,6 +83,12 @@ const HomeScreen = ({ navigation }) => {
       </ImageBackground>
     </>
   );
+};
+
+HomeScreen.navigationOptions = () => {
+  return {
+    headerShown: false,
+  };
 };
 
 const styles = StyleSheet.create({

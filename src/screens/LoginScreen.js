@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   StyleSheet,
@@ -16,8 +16,7 @@ import PaintButton from "../components/PaintButton";
 import LoginInput from "../components/LoginInput";
 import LoginErrorOverlay from "../components/LoginErrorOverlay";
 
-// Custom hooks
-import useLogin from "../hooks/useLogin";
+import { Context as AuthContext } from "../context/AuthContext";
 
 // Load assets
 const bgImg = require("../../assets/aprovados.png");
@@ -25,14 +24,9 @@ const logoImg = require("../../assets/casd-plus.png");
 
 const LoginScreen = ({ navigation }) => {
   // hooks to handle the user login information
-  [login, setLogin, password, setPassword, authenticateAPI] = useLogin();
-
-  // hooks to handle the overlay message in login error
-  const [visible, setVisible] = useState(false);
-
-  const toggleOverlay = () => {
-    setVisible(!visible);
-  };
+  const { state, signup, tryagain } = useContext(AuthContext);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   // fonts to be used in all app
   let [fontsLoaded] = useFonts({
@@ -59,8 +53,8 @@ const LoginScreen = ({ navigation }) => {
               <LoginInput
                 label='Login'
                 placeholder='Digite seu email do curso'
-                value={login}
-                setValue={setLogin}
+                value={username}
+                setValue={setUsername}
                 secureTextEntry={false}
                 style={styles.input}
               />
@@ -78,19 +72,17 @@ const LoginScreen = ({ navigation }) => {
                 primaryColor='#3192b3'
                 secundaryColor='#f9b342'
                 onPress={() => {
-                  authenticateAPI();
-                  navigation.navigate("Home");
+                  signup({ username, password });
                 }}
               />
+              {state.errorMessage ? (
+                <LoginErrorOverlay onBackdropPressFunction={tryagain} />
+              ) : null}
               <TouchableOpacity
                 style={{ alignSelf: "center", marginTop: 10 }}
-                onPress={toggleOverlay}>
+                onPress={null}>
                 <Text style={styles.pswReminder}>Esqueci a senha</Text>
               </TouchableOpacity>
-              <LoginErrorOverlay
-                visible={visible}
-                toggleOverlay={toggleOverlay}
-              />
             </View>
           </View>
         </ImageBackground>
