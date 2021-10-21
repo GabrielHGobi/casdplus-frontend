@@ -7,8 +7,6 @@ import {
   TouchableOpacity,
   Text,
 } from "react-native";
-import { useFonts } from "expo-font";
-import AppLoading from "expo-app-loading";
 
 // Custom components
 import PaintButton from "../components/PaintButton";
@@ -27,66 +25,55 @@ const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  // fonts to be used in all app
-  let [fontsLoaded] = useFonts({
-    MontserratRegular: require("../../assets/fonts/Montserrat-Regular.ttf"),
-    MontserratBold: require("../../assets/fonts/Montserrat-Bold.ttf"),
-  });
-
-  // to wait the fonts load
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  } else {
-    return (
-      <>
-        <ImageBackground
-          source={bgImg}
-          resizeMode='cover'
-          style={styles.backgroundImage}>
-          <View style={styles.container}>
-            <View style={styles.logoContainer}>
-              <Image style={styles.logo} source={logoImg} />
-            </View>
-            <View style={styles.formContainer}>
-              <LoginInput
-                label='Login'
-                placeholder='Digite seu email do curso'
-                value={username}
-                setValue={setUsername}
-                secureTextEntry={false}
-                style={styles.input}
-              />
-              <LoginInput
-                label='Senha'
-                placeholder='Digite sua senha cadastrada'
-                value={password}
-                setValue={setPassword}
-                secureTextEntry={true}
-                style={styles.input}
-              />
-              <PaintButton
-                style={styles.paint}
-                buttonText='Entrar'
-                primaryColor='#3192b3'
-                secundaryColor='#f9b342'
-                onPress={() => {
-                  signup({ username, password });
-                }}
-              />
-              {state.errorMessage ? (
-                <LoginErrorOverlay onBackdropPressFunction={tryagain} />
-              ) : null}
-              <TouchableOpacity
-                style={{ alignSelf: "center", marginTop: 10 }}
-                onPress={null}>
-                <Text style={styles.pswReminder}>Esqueci a senha</Text>
-              </TouchableOpacity>
-            </View>
+  return (
+    <>
+      <ImageBackground
+        source={bgImg}
+        resizeMode='cover'
+        style={styles.backgroundImage}>
+        <View style={styles.container}>
+          <View style={styles.logoContainer}>
+            <Image style={styles.logo} source={logoImg} />
           </View>
-        </ImageBackground>
-      </>
-    );
-  }
+          <View style={styles.formContainer}>
+            <LoginInput
+              label='Login'
+              placeholder='Digite seu email do curso'
+              value={username}
+              setValue={setUsername}
+              secureTextEntry={false}
+              style={styles.input}
+            />
+            <LoginInput
+              label='Senha'
+              placeholder='Digite sua senha cadastrada'
+              value={password}
+              setValue={setPassword}
+              secureTextEntry={true}
+              style={styles.input}
+            />
+            <PaintButton
+              style={styles.paint}
+              buttonText='Entrar'
+              primaryColor='#3192b3'
+              secundaryColor='#f9b342'
+              onPress={() => {
+                signup({ username, password });
+              }}
+            />
+            {state.errorMessage ? (
+              <LoginErrorOverlay onBackdropPressFunction={tryagain} />
+            ) : null}
+            <TouchableOpacity
+              style={{ alignSelf: "center", marginTop: 10 }}
+              onPress={null}>
+              <Text style={styles.pswReminder}>Esqueci a senha</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ImageBackground>
+    </>
+  );
 };
 
 const styles = StyleSheet.create({

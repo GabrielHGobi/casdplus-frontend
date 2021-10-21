@@ -2,6 +2,7 @@ import React from "react";
 import { StatusBar } from "react-native";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
+import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
 import LoginScreen from "./src/screens/LoginScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import AbsenceScreen from "./src/screens/AbsenceScreen";
@@ -13,6 +14,7 @@ import { Provider as AuthProvider } from "./src/context/AuthContext";
 import { setNavigator } from "./src/navigationRef";
 
 const switchNavigator = createSwitchNavigator({
+  ResolveAuth: ResolveAuthScreen,
   Login: LoginScreen,
   mainFlow: createStackNavigator({
     Home: HomeScreen,
