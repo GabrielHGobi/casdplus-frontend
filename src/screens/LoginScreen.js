@@ -21,7 +21,7 @@ const logoImg = require("../../assets/casd-plus.png");
 
 const LoginScreen = ({ navigation }) => {
   // hooks to handle the user login information
-  const { state, signup, tryagain } = useContext(AuthContext);
+  const { state, signin, tryagain } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -58,7 +58,7 @@ const LoginScreen = ({ navigation }) => {
               primaryColor='#3192b3'
               secundaryColor='#f9b342'
               onPress={() => {
-                signup({ username, password });
+                signin({ username, password });
               }}
             />
             {state.errorMessage ? (
