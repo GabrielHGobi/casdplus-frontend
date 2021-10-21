@@ -12,33 +12,43 @@ import ScreenCard from "../components/ScreenCard";
 
 const home_bg = require("../../assets/home_bg.png");
 const logo_casdvest = require("../../assets/logo_casdvest.png");
-const cardProps = {
-  CalendarCard: {
+const cardProps = [
+  {
+    id: "1",
     title: "Calendário\ndo ano",
     subtitle: "Eventos importantes",
     img: require("../../assets/calendar_img.png"),
+    navScreen: "Calendar",
   },
-  NoticesCard: {
+  {
+    id: "2",
     title: "Mural\nde avisos",
     subtitle: "Informações gerais",
     img: require("../../assets/notices_img.png"),
+    navScreen: "Notices",
   },
-  EssaysCard: {
+  {
+    id: "3",
     title: "Simulados\ne avaliações",
     subtitle: "Acesse seus resultados",
     img: require("../../assets/essays_img.png"),
+    navScreen: "Essays",
   },
-  ScheduleCard: {
+  {
+    id: "4",
     title: "Horário\nde aulas",
     subtitle: "Acesse seu cronograma\nsemanal",
     img: require("../../assets/schedule_img.png"),
+    navScreen: "Schedule",
   },
-  AbscenseCard: {
+  {
+    id: "5",
     title: "Justificativa\nde faltas",
     subtitle: "Preencha o documento",
     img: require("../../assets/absence_img.png"),
+    navScreen: "Absence",
   },
-};
+];
 
 const HomeScreen = ({ navigation }) => {
   const [name, setName] = useState("NOME_ALUNO");
@@ -51,34 +61,19 @@ const HomeScreen = ({ navigation }) => {
         imageStyle={styles.imageBackground}
         resizeMode='cover'>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.logoContainer}>
+          <View style={styles.upperContainer}>
             <Image source={logo_casdvest} style={styles.logo} />
-            <Text style={styles.logoText}>Bem-vindo, {name}!</Text>
+            <Text style={styles.text}>Bem-vindo, {name}!</Text>
           </View>
-          <View style={styles.cardContainer}>
+          {cardProps.map((item) => (
             <ScreenCard
-              cardProps={cardProps.AbscenseCard}
-              navigate={() => {
-                navigation.navigate("Absence");
-              }}
+              key={item.id}
+              title={item.title}
+              subtitle={item.subtitle}
+              img={item.img}
+              navScreen={item.navScreen}
             />
-            <ScreenCard
-              cardProps={cardProps.ScheduleCard}
-              navigate={() => navigation.navigate("Schedule")}
-            />
-            <ScreenCard
-              cardProps={cardProps.CalendarCard}
-              navigate={() => navigation.navigate("Calendar")}
-            />
-            <ScreenCard
-              cardProps={cardProps.NoticesCard}
-              navigate={() => navigation.navigate("Notices")}
-            />
-            <ScreenCard
-              cardProps={cardProps.EssaysCard}
-              navigate={() => navigation.navigate("Essays")}
-            />
-          </View>
+          ))}
         </ScrollView>
       </ImageBackground>
     </>
@@ -92,29 +87,21 @@ HomeScreen.navigationOptions = () => {
 };
 
 const styles = StyleSheet.create({
-  text: {
-    fontSize: 32,
-  },
   containerBackground: {
     width: "100%",
     flex: 1,
     alignContent: "center",
     backgroundColor: "#3192b3",
   },
-  imageBackground: {},
-  logo: {},
-  logoContainer: {
-    marginTop: 20,
+  upperContainer: {
+    marginVertical: 30,
     alignItems: "center",
   },
-  logoText: {
+  text: {
     fontFamily: "MontserratBold",
     fontWeight: "normal",
     fontSize: 24,
     color: "white",
-    marginTop: 30,
-  },
-  cardContainer: {
     marginTop: 30,
   },
 });
