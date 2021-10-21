@@ -4,7 +4,6 @@ import {
   StyleSheet,
   ImageBackground,
   Image,
-  StatusBar,
   TouchableOpacity,
   Text,
 } from "react-native";
@@ -40,7 +39,6 @@ const LoginScreen = ({ navigation }) => {
   } else {
     return (
       <>
-        <StatusBar backgroundColor='#195967' />
         <ImageBackground
           source={bgImg}
           resizeMode='cover'

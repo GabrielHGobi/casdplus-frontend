@@ -1,4 +1,5 @@
 import React from "react";
+import { StatusBar } from "react-native";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import LoginScreen from "./src/screens/LoginScreen";
@@ -28,6 +29,7 @@ const App = createAppContainer(switchNavigator);
 export default () => {
   return (
     <AuthProvider>
+      <StatusBar backgroundColor='#195967' />
       <App
         ref={(navigator) => {
           setNavigator(navigator);
