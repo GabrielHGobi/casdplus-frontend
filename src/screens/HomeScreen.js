@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -6,9 +6,11 @@ import {
   ImageBackground,
   Image,
   ScrollView,
+  Button,
 } from "react-native";
-
 import ScreenCard from "../components/ScreenCard";
+import { Context as AuthContext } from "../context/AuthContext";
+import { Context as StudentContext } from "../context/StudentContext";
 
 const home_bg = require("../../assets/home_bg.png");
 const logo_casdvest = require("../../assets/logo_casdvest.png");
@@ -51,6 +53,9 @@ const cardProps = [
 ];
 
 const HomeScreen = ({ navigation }) => {
+  const { state } = useContext(StudentContext);
+  const { signout } = useContext(AuthContext);
+
   const [name, setName] = useState("NOME_ALUNO");
 
   return (
@@ -63,7 +68,7 @@ const HomeScreen = ({ navigation }) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.upperContainer}>
             <Image source={logo_casdvest} style={styles.logo} />
-            <Text style={styles.text}>Bem-vindo, {name}!</Text>
+            <Text style={styles.text}>Bem-vindo, {state.name}!</Text>
           </View>
           {cardProps.map((item) => (
             <ScreenCard
@@ -74,6 +79,7 @@ const HomeScreen = ({ navigation }) => {
               navScreen={item.navScreen}
             />
           ))}
+          <Button title='Logout' onPress={signout} />
         </ScrollView>
       </ImageBackground>
     </>

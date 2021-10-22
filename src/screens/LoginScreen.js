@@ -14,6 +14,7 @@ import LoginInput from "../components/LoginInput";
 import LoginErrorOverlay from "../components/LoginErrorOverlay";
 
 import { Context as AuthContext } from "../context/AuthContext";
+import { Context as StudentContext } from "../context/StudentContext";
 
 // Load assets
 const bgImg = require("../../assets/aprovados.png");
@@ -21,7 +22,8 @@ const logoImg = require("../../assets/casd-plus.png");
 
 const LoginScreen = ({ navigation }) => {
   // hooks to handle the user login information
-  const { state, signin, tryagain } = useContext(AuthContext);
+  const { state, signin, clearErrorMessage } = useContext(AuthContext);
+  const { getStudentInfo } = useContext(StudentContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -58,11 +60,11 @@ const LoginScreen = ({ navigation }) => {
               primaryColor='#3192b3'
               secundaryColor='#f9b342'
               onPress={() => {
-                signin({ username, password });
+                signin({ username, password, getStudentInfo });
               }}
             />
             {state.errorMessage ? (
-              <LoginErrorOverlay onBackdropPressFunction={tryagain} />
+              <LoginErrorOverlay onBackdropPressFunction={clearErrorMessage} />
             ) : null}
             <TouchableOpacity
               style={{ alignSelf: "center", marginTop: 10 }}

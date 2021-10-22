@@ -19,20 +19,23 @@ const authReducer = (state, action) => {
   }
 };
 
-const tryLocalSignin = (dispatch) => async () => {
-  const token = await AsyncStorage.getItem("token");
-  await useFonts();
-  if (token) {
-    dispatch({ type: "signin", payload: token });
-    navigate("Home");
-  } else {
-    navigate("Login");
-  }
-};
+const tryLocalSignin =
+  (dispatch) =>
+  async ({ getStudentInfo }) => {
+    const token = await AsyncStorage.getItem("token");
+    await useFonts();
+    if (token) {
+      dispatch({ type: "signin", payload: token });
+      await getStudentInfo({ token });
+      navigate("Home");
+    } else {
+      navigate("Login");
+    }
+  };
 
 const signin =
   (dispatch) =>
-  async ({ username, password }) => {
+  async ({ username, password, getStudentInfo }) => {
     try {
       const response = await studentAPI.post("/login", { username, password });
       await AsyncStorage.setItem("token", response.data.token);
@@ -40,6 +43,7 @@ const signin =
         type: "signup",
         payload: response.data.token,
       });
+      getStudentInfo({ token: response.data.token });
       navigate("Home");
     } catch (err) {
       dispatch({

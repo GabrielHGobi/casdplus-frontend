@@ -11,6 +11,7 @@ import ScheduleScreen from "./src/screens/ScheduleScreen";
 import NoticesScreen from "./src/screens/NoticesScreen";
 import CalendarScreen from "./src/screens/CalendarScreen";
 import { Provider as AuthProvider } from "./src/context/AuthContext";
+import { Provider as StudentProvider } from "./src/context/StudentContext";
 import { setNavigator } from "./src/navigationRef";
 
 const switchNavigator = createSwitchNavigator({
@@ -31,12 +32,14 @@ const App = createAppContainer(switchNavigator);
 export default () => {
   return (
     <AuthProvider>
-      <StatusBar backgroundColor='#195967' />
-      <App
-        ref={(navigator) => {
-          setNavigator(navigator);
-        }}
-      />
+      <StudentProvider>
+        <StatusBar backgroundColor='#195967' />
+        <App
+          ref={(navigator) => {
+            setNavigator(navigator);
+          }}
+        />
+      </StudentProvider>
     </AuthProvider>
   );
 };
