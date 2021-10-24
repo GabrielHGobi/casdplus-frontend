@@ -17,6 +17,12 @@ const cardProps = {
     tipo: "Material",
     date: "15/10/21",
   },
+  Example2: {
+    title: "Professor Lucas Saiu do curso",
+    tipo: "Aviso",
+    date: "15/10/21",
+  },
+  
 };
 
 const NoticesScreen = ({ navigation }) => {
@@ -27,12 +33,18 @@ const NoticesScreen = ({ navigation }) => {
         style={styles.containerBackground}
         imageStyle={styles.imageBackground}
         resizeMode='cover'>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false}
+        style = {styles.scrollContainer}>
           <View style={styles.logoContainer}>
             <Image source={logo_casdvest} style={styles.logo} />
             <Text style={styles.logoText}>Mural de Avisos</Text>
           </View>
           <View style={styles.cardContainer}>
+
+            <NoticeCard cardProps={cardProps.Example}/>
+            <NoticeCard cardProps={cardProps.Example2}/>
+            <NoticeCard cardProps={cardProps.Example}/>
+            <NoticeCard cardProps={cardProps.Example2}/>
             <NoticeCard cardProps={cardProps.Example}/>
           </View>
         </ScrollView>
@@ -46,14 +58,12 @@ const styles = StyleSheet.create({
     fontSize: 32,
   },
   containerBackground: {
+    height: "100%",
     width: "100%",
-    flex: 1,
-    alignContent: "center",
     backgroundColor: "#3192b3",
   },
-  imageBackground: {
-    
-  },
+  scrollContainer:{  },
+  imageBackground: {},
   logo: {},
   logoContainer: {
     marginTop: 20,
@@ -69,9 +79,11 @@ const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: "white",
     marginTop: 30,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    // flex: 1,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    // height: "100%",
+    // position: "relative",
+    // bottom: "0%",
   },
 });
 

@@ -21,14 +21,13 @@ const NoticeCard = ({ cardProps, navigate }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#F9F9F4",
     borderRadius: 5,
-    height: 100,
+    height: 80,
     marginHorizontal: 20,
     alignItems: "center",
-    justifyContent: "center",
-    // paddingBottom: 0,
-    // marginBottom: 0,
+    marginTop: 20,
+    marginBottom: 20,
   },
   image: {
     width: "100%",
@@ -36,29 +35,31 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     alignItems: "center",
-
-    backgroundColor:"yellow",
     position: "absolute",
     width: "75%",
-    top: 15,
+    marginTop: 15,
     marginLeft: 0,
     // bottom: 0,
   },
   infoContainer:{
-    backgroundColor:"yellow",
-    bottom: 0,
-    alignItems: "flex-start",
-    justifyContent: "center",
+    // alignItems: "flex-start",
+    position: "absolute",
+    justifyContent: "space-between",
     width:"100%",
+    flexDirection: "row",
+    bottom: 18,
+    
   },
   tipoContainer: {
     alignItems: "center",
-    backgroundColor:"#F9F9F4",
+    backgroundColor:"#D1FEBC",
     marginLeft: 16,
     width: 86,
     borderRadius: 5,
   },
-  tipo :{},
+  tipo :{
+    fontSize: 12,
+  },
   dateContainer: {
     alignItems: "center",
     backgroundColor:"#FFC5B2",
@@ -66,7 +67,9 @@ const styles = StyleSheet.create({
     width: 86,
     borderRadius: 5,
   },
-  date :{},
+  date :{
+    fontSize: 12,
+  },
   title: {
     color: "black",
     fontFamily: "MontserratBold",
