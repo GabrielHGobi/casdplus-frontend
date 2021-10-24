@@ -15,6 +15,7 @@ const cardProps = {
   Example: {
     title: "Material de Biologia postado",
     tipo: "Material",
+    date: "15/10/21",
   },
 };
 
@@ -50,7 +51,9 @@ const styles = StyleSheet.create({
     alignContent: "center",
     backgroundColor: "#3192b3",
   },
-  imageBackground: {},
+  imageBackground: {
+    
+  },
   logo: {},
   logoContainer: {
     marginTop: 20,
@@ -64,7 +67,11 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   cardContainer: {
+    backgroundColor: "white",
     marginTop: 30,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    // flex: 1,
   },
 });
 
