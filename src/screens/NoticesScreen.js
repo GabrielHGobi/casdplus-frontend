@@ -6,6 +6,7 @@ import {
   ImageBackground,
   Image,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 
 import NoticeCard from "../components/NoticeCard";
@@ -40,7 +41,14 @@ const NoticesScreen = ({ navigation }) => {
             <Text style={styles.logoText}>Mural de Avisos</Text>
           </View>
           <View style={styles.cardContainer}>
-
+            <View style = {styles.filtros}>
+              <TouchableOpacity style = {styles.filtroConteudo}>
+                <Text style={styles.filtroText}>Tipo</Text>             
+              </TouchableOpacity>
+              <TouchableOpacity style = {styles.filtroConteudo}>
+                <Text style={styles.filtroText}>Data</Text>  
+              </TouchableOpacity>  
+            </View>
             <NoticeCard cardProps={cardProps.Example}/>
             <NoticeCard cardProps={cardProps.Example2}/>
             <NoticeCard cardProps={cardProps.Example}/>
@@ -84,6 +92,21 @@ const styles = StyleSheet.create({
     // height: "100%",
     // position: "relative",
     // bottom: "0%",
+  },
+  filtros:{
+    marginTop:22,
+    marginHorizontal: 30,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  filtroConteudo:{
+    paddingHorizontal:15,
+    backgroundColor:"#F1F1F0",
+    borderRadius:5,
+  },
+  filtroText:{
+    fontSize:20,
+    color: "black"
   },
 });
 
