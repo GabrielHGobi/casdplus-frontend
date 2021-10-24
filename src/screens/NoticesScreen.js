@@ -34,21 +34,22 @@ const NoticesScreen = ({ navigation }) => {
         style={styles.containerBackground}
         imageStyle={styles.imageBackground}
         resizeMode='cover'>
-        <ScrollView showsVerticalScrollIndicator={false}
-        style = {styles.scrollContainer}>
-          <View style={styles.logoContainer}>
+        <View style={styles.logoContainer}>
             <Image source={logo_casdvest} style={styles.logo} />
             <Text style={styles.logoText}>Mural de Avisos</Text>
           </View>
+        <View style = {styles.filtros}>
+          <TouchableOpacity style = {styles.filtroConteudo}>
+            <Text style={styles.filtroText}>Tipo</Text>             
+          </TouchableOpacity>
+          <TouchableOpacity style = {styles.filtroConteudo}>
+            <Text style={styles.filtroText}>Data</Text>  
+          </TouchableOpacity>  
+        </View>
+        <ScrollView showsVerticalScrollIndicator={false}
+        style = {styles.scrollContainer}>
+          
           <View style={styles.cardContainer}>
-            <View style = {styles.filtros}>
-              <TouchableOpacity style = {styles.filtroConteudo}>
-                <Text style={styles.filtroText}>Tipo</Text>             
-              </TouchableOpacity>
-              <TouchableOpacity style = {styles.filtroConteudo}>
-                <Text style={styles.filtroText}>Data</Text>  
-              </TouchableOpacity>  
-            </View>
             <NoticeCard cardProps={cardProps.Example}/>
             <NoticeCard cardProps={cardProps.Example2}/>
             <NoticeCard cardProps={cardProps.Example}/>
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#3192b3",
   },
-  scrollContainer:{  },
+  scrollContainer:{ marginTop: 15, },
   imageBackground: {},
   logo: {},
   logoContainer: {
@@ -86,7 +87,6 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     backgroundColor: "white",
-    marginTop: 30,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     // height: "100%",
@@ -94,13 +94,13 @@ const styles = StyleSheet.create({
     // bottom: "0%",
   },
   filtros:{
-    marginTop:22,
+    marginTop:32,
     marginHorizontal: 30,
     flexDirection: "row",
     justifyContent: "space-between",
   },
   filtroConteudo:{
-    paddingHorizontal:15,
+    paddingHorizontal:20,
     backgroundColor:"#F1F1F0",
     borderRadius:5,
   },
