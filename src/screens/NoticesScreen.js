@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   StyleSheet,
@@ -10,23 +10,24 @@ import {
 } from "react-native";
 
 import NoticeCard from "../components/NoticeCard";
+import { Context as NoticesContext } from '../context/NoticesContext';
 
 const logo_casdvest = require("../../assets/logo_casdvest.png");
-const cardProps = {
-  Example: {
-    title: "Material de Biologia postado",
-    tipo: "Material",
-    date: "15/10/21",
-  },
-  Example2: {
-    title: "Professor Lucas Saiu do curso",
-    tipo: "Aviso",
-    date: "15/10/21",
-  },
-  
-};
-
+ 
 const NoticesScreen = ({ navigation }) => {
+
+  const { state, getMessages } = useContext(NoticesContext);
+
+  useEffect(() => {
+    getMessages();
+    navigation.addListener("didFocus", () => {
+      getMessages();
+    });
+
+    return () => {
+      listener.remove();
+    };
+  }, []);
 
   return (
     <>
@@ -37,7 +38,7 @@ const NoticesScreen = ({ navigation }) => {
         <View style={styles.logoContainer}>
             <Image source={logo_casdvest} style={styles.logo} />
             <Text style={styles.logoText}>Mural de Avisos</Text>
-          </View>
+        </View>
         <View style = {styles.filtros}>
           <TouchableOpacity style = {styles.filtroConteudo}>
             <Text style={styles.filtroText}>Tipo</Text>             
@@ -46,20 +47,24 @@ const NoticesScreen = ({ navigation }) => {
             <Text style={styles.filtroText}>Data</Text>  
           </TouchableOpacity>  
         </View>
-        <ScrollView showsVerticalScrollIndicator={false}
-        style = {styles.scrollContainer}>
-          
-          <View style={styles.cardContainer}>
-            <NoticeCard cardProps={cardProps.Example}/>
-            <NoticeCard cardProps={cardProps.Example2}/>
-            <NoticeCard cardProps={cardProps.Example}/>
-            <NoticeCard cardProps={cardProps.Example2}/>
-            <NoticeCard cardProps={cardProps.Example}/>
-          </View>
-        </ScrollView>
+        <View style = {styles.cardContainer}>
+          <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+          {state.map((item) => (
+            <NoticeCard
+              key={item.title}
+              cardProps={item}
+            />
+          ))}
+          </ScrollView>
+        </View>
       </ImageBackground>
     </>
   );
+};
+NoticesScreen.navigationOptions = () => {
+  return {
+    headerShown: false,
+  };
 };
 
 const styles = StyleSheet.create({
@@ -71,7 +76,7 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#3192b3",
   },
-  scrollContainer:{ marginTop: 15, },
+  scrollContainer:{  },
   imageBackground: {},
   logo: {},
   logoContainer: {
@@ -86,12 +91,11 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   cardContainer: {
+    marginTop: 15,
+    flex: 1,
     backgroundColor: "white",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    // height: "100%",
-    // position: "relative",
-    // bottom: "0%",
   },
   filtros:{
     marginTop:32,

@@ -7,12 +7,15 @@ const NoticeCard = ({ cardProps, navigate }) => {
       <View style={styles.textContainer}>
         <Text style={styles.title}>{cardProps.title}</Text>
       </View>
-      <View style = {styles.infoContainer}> 
+      <View style = {styles.infoContainer}>
+        <View style={styles.authorContainer}>
+          <Text style={styles.author}>{cardProps.author.first_name}</Text>
+        </View>
         <View style={styles.tipoContainer}>
-          <Text style={styles.tipo}>{cardProps.tipo}</Text>
+          <Text style={styles.tipo}>Material</Text>
         </View>
         <View style={styles.dateContainer}>
-          <Text style={styles.date}>{cardProps.date}</Text>
+          <Text style={styles.date}>{cardProps.createdAt}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -23,7 +26,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#F9F9F4",
     borderRadius: 5,
-    height: 80,
     marginHorizontal: 20,
     alignItems: "center",
     marginTop: 20,
@@ -35,37 +37,29 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     alignItems: "center",
-    position: "absolute",
-    width: "75%",
-    marginTop: 15,
-    marginLeft: 0,
-    // bottom: 0,
+    paddingHorizontal: 35,
+    marginVertical: 15,
   },
   infoContainer:{
-    // alignItems: "flex-start",
-    position: "absolute",
     justifyContent: "space-between",
-    width:"100%",
     flexDirection: "row",
-    bottom: 18,
+    marginBottom: 18,
     
   },
   tipoContainer: {
     alignItems: "center",
     backgroundColor:"#D1FEBC",
-    marginLeft: 16,
-    width: 86,
+    flex:1,
     borderRadius: 5,
+    marginHorizontal:20,
   },
   tipo :{
     fontSize: 12,
   },
   dateContainer: {
+    flex:1,
     alignItems: "center",
-    backgroundColor:"#FFC5B2",
-    marginRight: 16,
-    width: 86,
-    borderRadius: 5,
+    marginHorizontal:20,
   },
   date :{
     fontSize: 12,
@@ -83,6 +77,15 @@ const styles = StyleSheet.create({
     fontWeight: "normal",
     fontSize: 14,
     lineHeight: 16,
+  },
+  author:{
+    fontSize: 12,
+    fontFamily: "MontserratSemiBold",
+  },
+  authorContainer:{
+    flex:1,
+    alignItems: "center",
+    marginHorizontal:20,
   },
 });
 

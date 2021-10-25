@@ -12,6 +12,7 @@ import NoticesScreen from "./src/screens/NoticesScreen";
 import CalendarScreen from "./src/screens/CalendarScreen";
 import { Provider as AuthProvider } from "./src/context/AuthContext";
 import { Provider as StudentProvider } from "./src/context/StudentContext";
+import { Provider as NoticesProvider } from './src/context/NoticesContext';
 import { setNavigator } from "./src/navigationRef";
 
 const switchNavigator = createSwitchNavigator({
@@ -33,12 +34,14 @@ export default () => {
   return (
     <AuthProvider>
       <StudentProvider>
+        <NoticesProvider>
         <StatusBar backgroundColor='#195967' />
         <App
           ref={(navigator) => {
             setNavigator(navigator);
           }}
         />
+        </NoticesProvider>
       </StudentProvider>
     </AuthProvider>
   );
