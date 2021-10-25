@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, Image } from "react-native";
 import { Overlay } from "react-native-elements";
+import { Context as AuthContext } from "../context/AuthContext";
 
 const sign_error_icon = require("../../assets/sign_error_icon.png");
 
-const LoginErrorOverlay = ({ visible, toggleOverlay }) => {
+const LoginErrorOverlay = ({ onBackdropPressFunction }) => {
+  const { state } = useContext(AuthContext);
+
   return (
     <>
       <Overlay
-        isVisible={visible}
-        onBackdropPress={toggleOverlay}
+        isVisible={true}
+        onBackdropPress={() => onBackdropPressFunction()}
         overlayStyle={styles.overlay}>
         <Image source={sign_error_icon} style={{ marginTop: 15 }} />
-        <Text style={styles.upperText}>Login e/ou senha inválidos.</Text>
+        <Text style={styles.upperText}>{state.errorMessage}</Text>
         <Text style={styles.lowerText}>
           Tente novamente ou contate a diretoria do CASD.
         </Text>

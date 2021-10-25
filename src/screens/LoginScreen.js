@@ -1,23 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   StyleSheet,
   ImageBackground,
   Image,
-  StatusBar,
   TouchableOpacity,
   Text,
 } from "react-native";
-import { useFonts } from "expo-font";
-import AppLoading from "expo-app-loading";
 
 // Custom components
 import PaintButton from "../components/PaintButton";
 import LoginInput from "../components/LoginInput";
 import LoginErrorOverlay from "../components/LoginErrorOverlay";
 
-// Custom hooks
-import useLogin from "../hooks/useLogin";
+import { Context as AuthContext } from "../context/AuthContext";
+import { Context as StudentContext } from "../context/StudentContext";
 
 // Load assets
 const bgImg = require("../../assets/aprovados.png");
@@ -25,78 +22,60 @@ const logoImg = require("../../assets/casd-plus.png");
 
 const LoginScreen = ({ navigation }) => {
   // hooks to handle the user login information
-  [login, setLogin, password, setPassword, authenticateAPI] = useLogin();
+  const { state, signin, clearErrorMessage } = useContext(AuthContext);
+  const { getStudentInfo } = useContext(StudentContext);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  // hooks to handle the overlay message in login error
-  const [visible, setVisible] = useState(false);
-
-  const toggleOverlay = () => {
-    setVisible(!visible);
-  };
-
-  // fonts to be used in all app
-  let [fontsLoaded] = useFonts({
-    MontserratRegular: require("../../assets/fonts/Montserrat-Regular.ttf"),
-    MontserratBold: require("../../assets/fonts/Montserrat-Bold.ttf"),
-  });
-
-  // to wait the fonts load
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  } else {
-    return (
-      <>
-        <StatusBar backgroundColor='#195967' />
-        <ImageBackground
-          source={bgImg}
-          resizeMode='cover'
-          style={styles.backgroundImage}>
-          <View style={styles.container}>
-            <View style={styles.logoContainer}>
-              <Image style={styles.logo} source={logoImg} />
-            </View>
-            <View style={styles.formContainer}>
-              <LoginInput
-                label='Login'
-                placeholder='Digite seu email do curso'
-                value={login}
-                setValue={setLogin}
-                secureTextEntry={false}
-                style={styles.input}
-              />
-              <LoginInput
-                label='Senha'
-                placeholder='Digite sua senha cadastrada'
-                value={password}
-                setValue={setPassword}
-                secureTextEntry={true}
-                style={styles.input}
-              />
-              <PaintButton
-                style={styles.paint}
-                buttonText='Entrar'
-                primaryColor='#3192b3'
-                secundaryColor='#f9b342'
-                onPress={() => {
-                  authenticateAPI();
-                  navigation.navigate("Home");
-                }}
-              />
-              <TouchableOpacity
-                style={{ alignSelf: "center", marginTop: 10 }}
-                onPress={toggleOverlay}>
-                <Text style={styles.pswReminder}>Esqueci a senha</Text>
-              </TouchableOpacity>
-              <LoginErrorOverlay
-                visible={visible}
-                toggleOverlay={toggleOverlay}
-              />
-            </View>
+  return (
+    <>
+      <ImageBackground
+        source={bgImg}
+        resizeMode='cover'
+        style={styles.backgroundImage}>
+        <View style={styles.container}>
+          <View style={styles.logoContainer}>
+            <Image style={styles.logo} source={logoImg} />
           </View>
-        </ImageBackground>
-      </>
-    );
-  }
+          <View style={styles.formContainer}>
+            <LoginInput
+              label='Login'
+              placeholder='Digite seu email do curso'
+              value={username}
+              setValue={setUsername}
+              secureTextEntry={false}
+              style={styles.input}
+            />
+            <LoginInput
+              label='Senha'
+              placeholder='Digite sua senha cadastrada'
+              value={password}
+              setValue={setPassword}
+              secureTextEntry={true}
+              style={styles.input}
+            />
+            <PaintButton
+              style={styles.paint}
+              buttonText='Entrar'
+              primaryColor='#3192b3'
+              secundaryColor='#f9b342'
+              onPress={() => {
+                signin({ username, password, getStudentInfo });
+              }}
+            />
+            {state.errorMessage ? (
+              <LoginErrorOverlay onBackdropPressFunction={clearErrorMessage} />
+            ) : null}
+            <TouchableOpacity
+              style={{ alignSelf: "center", marginTop: 10 }}
+              onPress={null}>
+              <Text style={styles.pswReminder}>Esqueci a senha</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ImageBackground>
+    </>
+  );
 };
 
 const styles = StyleSheet.create({

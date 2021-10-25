@@ -1,14 +1,17 @@
 import React from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
+import { navigate } from "../navigationRef";
 
-const ScreenCard = ({ cardProps, navigate }) => {
+const ScreenCard = ({ title, subtitle, img, navScreen }) => {
   return (
-    <TouchableOpacity onPress={navigate} style={styles.container}>
-      <Image source={cardProps.img} style={styles.image} />
+    <TouchableOpacity
+      onPress={() => navigate(navScreen)}
+      style={styles.container}>
+      <Image source={img} style={styles.image} />
       <View style={styles.blackOpacity} />
       <View style={styles.textContainer}>
-        <Text style={styles.title}>{cardProps.title}</Text>
-        <Text style={styles.subtitle}>{cardProps.subtitle}</Text>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.subtitle}>{subtitle}</Text>
       </View>
     </TouchableOpacity>
   );
