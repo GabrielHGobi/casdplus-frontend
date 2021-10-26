@@ -1,9 +1,9 @@
 import React from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
-
-const NoticeCard = ({ cardProps, navigate }) => {
+import { navigate } from "../navigationRef";
+const NoticeCard = ({ cardProps,navScreen}) => {
   return (
-    <TouchableOpacity onPress={navigate} style={styles.container}>
+    <TouchableOpacity onPress={() => navigate(navScreen,cardProps)} style={styles.container}>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{cardProps.title}</Text>
       </View>

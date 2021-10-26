@@ -13,8 +13,10 @@ import NoticeCard from "../components/NoticeCard";
 import { Context as NoticesContext } from '../context/NoticesContext';
 
 const logo_casdvest = require("../../assets/logo_casdvest.png");
- 
+const MessageScreen = "Message";
 const NoticesScreen = ({ navigation }) => {
+
+  
 
   const { state, getMessages } = useContext(NoticesContext);
 
@@ -53,6 +55,7 @@ const NoticesScreen = ({ navigation }) => {
             <NoticeCard
               key={item.title}
               cardProps={item}
+              navScreen={MessageScreen}
             />
           ))}
           </ScrollView>

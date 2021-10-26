@@ -10,6 +10,8 @@ import EssaysScreen from "./src/screens/EssaysScreen";
 import ScheduleScreen from "./src/screens/ScheduleScreen";
 import NoticesScreen from "./src/screens/NoticesScreen";
 import CalendarScreen from "./src/screens/CalendarScreen";
+import MessageScreen from "./src/screens/MessageScreen";
+
 import { Provider as AuthProvider } from "./src/context/AuthContext";
 import { Provider as StudentProvider } from "./src/context/StudentContext";
 import { Provider as NoticesProvider } from './src/context/NoticesContext';
@@ -25,6 +27,7 @@ const switchNavigator = createSwitchNavigator({
     Schedule: ScheduleScreen,
     Calendar: CalendarScreen,
     Notices: NoticesScreen,
+    Message: MessageScreen,
   }),
 });
 
