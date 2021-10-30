@@ -1,7 +1,15 @@
 import React from "react";
 import { View, StyleSheet, Text,ImageBackground } from "react-native";
 
-const MessageScreen = ({route, navigation}) => {
+const MessageScreen = ({navigation}) => {
+  const data = new Date(navigation.getParam('createdAt'));
+  const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul","Ago","Set","Out","Nov","Dez"];
+  let dataFormatada = ((data.getDate() + " " + meses[(data.getMonth())] + " " + data.getFullYear()));
+  let dataMinutos = data.getMinutes();
+  if (dataMinutos < 10){
+    dataMinutos = ("0" + dataMinutos);
+  }
+  let horaFormatada = ((data.getHours() + ":" + dataMinutos));
   return (
     <ImageBackground 
     style = {styles.ImageBackground}
@@ -9,20 +17,21 @@ const MessageScreen = ({route, navigation}) => {
       
     <View style = {styles.MessageCard}>
       <View style = {styles.titleContainer}>     
-        <Text style={styles.titleText}>Títulos</Text>
+        <Text style={styles.titleText}>{navigation.getParam('title')}</Text>
       </View>
       <View style = {styles.authorContainer}>
-        <Text style={styles.authorText}>Autor</Text>   
+        <Text style={styles.authorText}>{navigation.getParam('author').first_name} {navigation.getParam('author').last_name}</Text>   
       </View>
       <View style = {styles.bodyContainer}>     
-        <Text style={styles.bodyText}>Conteúdolajksdlakjsdlajksldkjasdaskdjlçaskjdlakjsdlçakjsdlçaksjdalskjdalçskjdalçskjdaçlksjdlça</Text>
+        <Text style={styles.bodyText}>{navigation.getParam('body')}</Text>
       </View>
       <View style = {styles.infoContainer}>
         <View style={styles.tipoContainer}>    
          <Text style={styles.infoText}>Material</Text>
         </View>
         <View style={styles.dateContainer}>
-          <Text style={styles.infoText}>22/10/21</Text>
+          <Text style={styles.infoText}>{dataFormatada}</Text>
+          <Text style={styles.infoText}>{horaFormatada}</Text>
         </View>
       </View>
       </View>
@@ -47,13 +56,15 @@ const styles = StyleSheet.create({
   titleContainer:{
     justifyContent: "center",
     flex: 0.1,
-    marginTop:30,
+    marginTop:20,
   },
   titleText:{
     fontFamily: "MontserratBold",
     fontWeight: "normal",
-    fontSize: 20,
+    fontSize: 18,
     lineHeight: 18,
+    padding:5,
+    // backgroundColor:"red",
   },
   authorContainer:{
     justifyContent: "center",
@@ -62,7 +73,7 @@ const styles = StyleSheet.create({
   },
   authorText:{
     fontFamily: "MontserratSemiBold",
-    fontSize: 18,
+    fontSize: 16,
   },
   bodyContainer:{
     flex: 0.7,
@@ -72,18 +83,17 @@ const styles = StyleSheet.create({
   },
   bodyText:{
     fontFamily: "MontserratRegular",
-    fontSize: 16,
+    fontSize: 14,
   },
   infoContainer:{
     flex: 0.1,
     justifyContent: "space-between",
     flexDirection: "row",
     marginBottom: 20,
-    backgroundColor:"red",
     // Bottom: 18,
   },
   infoText:{
-    fontFamily: "MontserratSemiBold",
+    fontFamily: "MontserratRegular",
     fontSize: 18,
   },
   tipoContainer: {

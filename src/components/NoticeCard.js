@@ -2,6 +2,9 @@ import React from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { navigate } from "../navigationRef";
 const NoticeCard = ({ cardProps,navScreen}) => {
+  const data = new Date(cardProps.createdAt);
+  const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul","Ago","Set","Out","Nov","Dez"];
+  let dataFormatada = ((data.getDate() + " " + meses[(data.getMonth())] + " " + data.getFullYear()));
   return (
     <TouchableOpacity onPress={() => navigate(navScreen,cardProps)} style={styles.container}>
       <View style={styles.textContainer}>
@@ -15,7 +18,7 @@ const NoticeCard = ({ cardProps,navScreen}) => {
           <Text style={styles.tipo}>Material</Text>
         </View>
         <View style={styles.dateContainer}>
-          <Text style={styles.date}>{cardProps.createdAt}</Text>
+          <Text style={styles.date}>{dataFormatada}</Text>
         </View>
       </View>
     </TouchableOpacity>

@@ -10,6 +10,9 @@ import {
 } from "react-native";
 
 import NoticeCard from "../components/NoticeCard";
+import TypeButtonOverlay from "../components/TypeButtonOverlay";
+
+
 import { Context as NoticesContext } from '../context/NoticesContext';
 
 const logo_casdvest = require("../../assets/logo_casdvest.png");
@@ -43,7 +46,11 @@ const NoticesScreen = ({ navigation }) => {
         </View>
         <View style = {styles.filtros}>
           <TouchableOpacity style = {styles.filtroConteudo}>
-            <Text style={styles.filtroText}>Tipo</Text>             
+            <Text style={styles.filtroText}
+              onPress = {()  => {
+                <TypeButtonOverlay onBackdropPressFunction={null}/>
+              }}
+            >Tipo</Text>             
           </TouchableOpacity>
           <TouchableOpacity style = {styles.filtroConteudo}>
             <Text style={styles.filtroText}>Data</Text>  
