@@ -2,6 +2,7 @@
 
 This is the frontend for CASDplus project. Authors
 - Gabriel Henrique Gobi ([@GabrielHGobi](https://github.com/kowalks))
+- Fernando Gusmão Zanchitta ([@FernandoZanchitta] (https://github.com/FernandoZanchitta))
 
 ## Installation
 

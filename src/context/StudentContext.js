@@ -1,13 +1,15 @@
 import { useContext } from "react";
 import createDataContext from "./createDataContext";
-import { Context as AuthContext } from "./AuthContext";
 import studentAPI from "../api/CASDplus_student";
-import { navigate } from "../navigationRef";
 
 const studentReducer = (state, action) => {
   switch (action.type) {
     case "register_info":
-      return { name: action.payload.name };
+      return {
+        first_name: action.payload.first_name,
+        last_name: action.payload.last_name,
+        is_casdinho: action.payload.is_casdinho,
+      };
     default:
       return state;
   }
@@ -23,7 +25,9 @@ const getStudentInfo =
       dispatch({
         type: "register_info",
         payload: {
-          name: response.data.first_name,
+          first_name: response.data.first_name,
+          last_name: response.data.last_name,
+          is_casdinho: response.data.is_casdinho,
         },
       });
     } catch (err) {
@@ -34,5 +38,5 @@ const getStudentInfo =
 export const { Provider, Context } = createDataContext(
   studentReducer,
   { getStudentInfo },
-  { name: "" }
+  { first_name: "", last_name: "", is_casdinho: false }
 );
