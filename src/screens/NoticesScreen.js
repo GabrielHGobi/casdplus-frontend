@@ -8,6 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
+import { set } from "react-native-reanimated";
 
 import NoticeCard from "../components/NoticeCard";
 import TypeButtonOverlay from "../components/TypeButtonOverlay";
@@ -33,7 +34,7 @@ const NoticesScreen = ({ navigation }) => {
       listener.remove();
     };
   }, []);
-
+  const [pressed,setPressed] = useState(false);
   return (
     <>
       <ImageBackground //TODO: fix the background
@@ -45,17 +46,17 @@ const NoticesScreen = ({ navigation }) => {
             <Text style={styles.logoText}>Mural de Avisos</Text>
         </View>
         <View style = {styles.filtros}>
-          <TouchableOpacity style = {styles.filtroConteudo}>
-            <Text style={styles.filtroText}
-              onPress = {()  => {
-                <TypeButtonOverlay onBackdropPressFunction={null}/>
-              }}
-            >Tipo</Text>             
+          <TouchableOpacity style = {styles.filtroConteudo}
+          onPress = {() => {setPressed(true)}}>
+            <Text style={styles.filtroText}>Tipo</Text>             
           </TouchableOpacity>
           <TouchableOpacity style = {styles.filtroConteudo}>
             <Text style={styles.filtroText}>Data</Text>  
           </TouchableOpacity>  
         </View>
+        {pressed ?(
+          <TypeButtonOverlay stateOverlay = {pressed} onBackdropPressFunction = {setPressed}/>)
+         : null}
         <View style = {styles.cardContainer}>
           <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
           {state.map((item) => (

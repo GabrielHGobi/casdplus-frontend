@@ -1,24 +1,37 @@
-import React, { useContext } from "react";
-import { StyleSheet, Text, Image } from "react-native";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { Overlay } from "react-native-elements";
-import { Context as AuthContext } from "../context/AuthContext";
 
-const sign_error_icon = require("../../assets/sign_error_icon.png");
 
-const TypeButtonOverlay = ({ onBackdropPressFunction }) => {
-  const { state } = useContext(AuthContext);
-
+const TypeButtonOverlay = ({onBackdropPressFunction}) => {
   return (
     <>
       <Overlay
         isVisible={true}
-        onBackdropPress={() => onBackdropPressFunction()}
+        onBackdropPress={() => {onBackdropPressFunction(false)}}
         overlayStyle={styles.overlay}>
-        <Image source={sign_error_icon} style={{ marginTop: 15 }} />
-        <Text style={styles.upperText}>{state.errorMessage}</Text>
-        <Text style={styles.lowerText}>
-          Tente novamente ou contate a diretoria do CASD.
-        </Text>
+        <Text style={styles.upperText}>Selecione o tipo para filtrar:</Text>
+        <View style={styles.stylesContainer}>
+          <View style={[styles.tipoContainer, {backgroundColor:"#D1FEBC"}]}>
+            <Text style={styles.tipo}>Material</Text>
+          </View>
+          <View style={[styles.tipoContainer, {backgroundColor:"#FFC5B2"}]}>
+            <Text style={styles.tipo}>Simulado</Text>
+          </View>
+        </View>
+        <View style={styles.stylesContainer}>
+          <View style={[styles.tipoContainer, {backgroundColor:"#F9B342"}]}>
+            <Text style={styles.tipo}>Aula</Text>
+          </View>
+          <View style={[styles.tipoContainer, {backgroundColor:"#B4B2FF"}]}>
+            <Text style={styles.tipo}>Prova</Text>
+          </View>
+        </View>
+        <View style={styles.stylesContainer}>
+          <View style={[styles.tipoContainer, {backgroundColor:"#FF6431"}]}>
+            <Text style={styles.tipo}>Aviso</Text>
+          </View>
+        </View>
       </Overlay>
     </>
   );
@@ -33,19 +46,33 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   upperText: {
-    fontFamily: "MontserratRegular",
+    fontFamily: "MontserratSemiBold",
     fontWeight: "normal",
-    fontSize: 20,
-    marginTop: 10,
+    fontSize: 16,
+    marginTop: 20,
+    marginBottom: 6,
     textAlign: "center",
   },
-  lowerText: {
+  
+  stylesContainer:{
+    marginTop: 20,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start' // if you want to fill rows left to right
+  },
+
+  tipoContainer: {
+    alignItems: "center",
+    justifyContent:"center",
+    flex:1,
+    borderRadius: 5,
+    marginHorizontal:20,
+    width: 100,
+    height:25,
+  },
+  tipo :{
+    fontSize: 12,
     fontFamily: "MontserratRegular",
-    fontWeight: "normal",
-    fontSize: 14,
-    marginBottom: 30,
-    textAlign: "center",
-    marginHorizontal: 32,
   },
 });
 
