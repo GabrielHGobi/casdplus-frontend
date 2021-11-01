@@ -12,7 +12,7 @@ import { set } from "react-native-reanimated";
 
 import NoticeCard from "../components/NoticeCard";
 import TypeButtonOverlay from "../components/TypeButtonOverlay";
-
+import DateButtonOverlay from "../components/DateButtonOverlay";
 
 import { Context as NoticesContext } from '../context/NoticesContext';
 
@@ -34,7 +34,8 @@ const NoticesScreen = ({ navigation }) => {
       listener.remove();
     };
   }, []);
-  const [pressed,setPressed] = useState(false);
+  const [pressedType,setPressedType] = useState(false);
+  const [pressedDate,setPressedDate] = useState(false);
   return (
     <>
       <ImageBackground //TODO: fix the background
@@ -47,15 +48,19 @@ const NoticesScreen = ({ navigation }) => {
         </View>
         <View style = {styles.filtros}>
           <TouchableOpacity style = {styles.filtroConteudo}
-          onPress = {() => {setPressed(true)}}>
+          onPress = {() => {setPressedType(true)}}>
             <Text style={styles.filtroText}>Tipo</Text>             
           </TouchableOpacity>
           <TouchableOpacity style = {styles.filtroConteudo}>
-            <Text style={styles.filtroText}>Data</Text>  
+            <Text style={styles.filtroText}
+            onPress = {() => {setPressedDate(true)}}>Data</Text>  
           </TouchableOpacity>  
         </View>
-        {pressed ?(
-          <TypeButtonOverlay stateOverlay = {pressed} onBackdropPressFunction = {setPressed}/>)
+        {pressedType ?(
+          <TypeButtonOverlay onBackdropPressFunction = {setPressedType}/>)
+         : null}
+        {pressedDate ?(
+          <DateButtonOverlay onBackdropPressFunction = {setPressedDate}/>)
          : null}
         <View style = {styles.cardContainer}>
           <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>

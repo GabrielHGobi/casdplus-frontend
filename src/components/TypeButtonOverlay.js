@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View,TouchableOpacity  } from "react-native";
 import { Overlay } from "react-native-elements";
 
 
@@ -12,25 +12,25 @@ const TypeButtonOverlay = ({onBackdropPressFunction}) => {
         overlayStyle={styles.overlay}>
         <Text style={styles.upperText}>Selecione o tipo para filtrar:</Text>
         <View style={styles.stylesContainer}>
-          <View style={[styles.tipoContainer, {backgroundColor:"#D1FEBC"}]}>
+          <TouchableOpacity style={[styles.tipoContainer, {backgroundColor:"#D1FEBC"}]}>
             <Text style={styles.tipo}>Material</Text>
-          </View>
-          <View style={[styles.tipoContainer, {backgroundColor:"#FFC5B2"}]}>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.tipoContainer, {backgroundColor:"#FFC5B2"}]}>
             <Text style={styles.tipo}>Simulado</Text>
-          </View>
+          </TouchableOpacity>
         </View>
         <View style={styles.stylesContainer}>
-          <View style={[styles.tipoContainer, {backgroundColor:"#F9B342"}]}>
+          <TouchableOpacity style={[styles.tipoContainer, {backgroundColor:"#F9B342"}]}>
             <Text style={styles.tipo}>Aula</Text>
-          </View>
-          <View style={[styles.tipoContainer, {backgroundColor:"#B4B2FF"}]}>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.tipoContainer, {backgroundColor:"#B4B2FF"}]}>
             <Text style={styles.tipo}>Prova</Text>
-          </View>
+          </TouchableOpacity>
         </View>
         <View style={styles.stylesContainer}>
-          <View style={[styles.tipoContainer, {backgroundColor:"#FF6431"}]}>
+          <TouchableOpacity style={[styles.tipoContainer, {backgroundColor:"#FF6431"}]}>
             <Text style={styles.tipo}>Aviso</Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </Overlay>
     </>
