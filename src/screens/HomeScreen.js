@@ -9,11 +9,11 @@ import {
   Button,
 } from "react-native";
 import ScreenCard from "../components/ScreenCard";
+import Header from "../components/Header";
 import { Context as AuthContext } from "../context/AuthContext";
 import { Context as StudentContext } from "../context/StudentContext";
 
 const home_bg = require("../../assets/home_bg.png");
-const logo_casdvest = require("../../assets/logo_casdvest.png");
 const cardProps = [
   {
     id: "1",
@@ -55,21 +55,17 @@ const cardProps = [
 const HomeScreen = ({ navigation }) => {
   const { state } = useContext(StudentContext);
   const { signout } = useContext(AuthContext);
-
-  const [name, setName] = useState("NOME_ALUNO");
-
   return (
     <>
       <ImageBackground //TODO: fix the background
         source={home_bg}
         style={styles.containerBackground}
-        imageStyle={styles.imageBackground}
         resizeMode='cover'>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.upperContainer}>
-            <Image source={logo_casdvest} style={styles.logo} />
-            <Text style={styles.text}>Bem-vindo, {state.name}!</Text>
-          </View>
+          <Header
+            title={`Bem-vindo, ${state.first_name}!`}
+            textStyle={{ fontSize: 24 }}
+          />
           {cardProps.map((item) => (
             <ScreenCard
               key={item.id}
@@ -98,17 +94,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignContent: "center",
     backgroundColor: "#3192b3",
-  },
-  upperContainer: {
-    marginVertical: 30,
-    alignItems: "center",
-  },
-  text: {
-    fontFamily: "MontserratBold",
-    fontWeight: "normal",
-    fontSize: 24,
-    color: "white",
-    marginTop: 30,
   },
 });
 
