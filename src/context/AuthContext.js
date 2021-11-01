@@ -54,9 +54,17 @@ const signin =
   };
 
 const signout = (dispatch) => async () => {
-  await AsyncStorage.removeItem("token");
-  dispatch({ type: "signout" });
-  navigate("Login");
+  const token = await AsyncStorage.getItem("token");
+  try {
+    const response = await studentAPI.delete("/logout", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    await AsyncStorage.removeItem("token");
+    dispatch({ type: "signout" });
+    navigate("Login");
+  } catch (err) {
+    console.log(err.message);
+  }
 };
 
 const clearErrorMessage = (dispatch) => () => {
