@@ -1,12 +1,12 @@
 import React from "react";
 import { View, Image, StyleSheet, Text } from "react-native";
 
-const Header = ({ title }) => {
+const Header = ({ title, textStyle }) => {
   const logo_casdvest = require("../../assets/logo_casdvest.png");
   return (
     <View style={{ alignItems: "center" }}>
       <Image source={logo_casdvest} style={styles.logo} />
-      <Text style={styles.title}>{title}</Text>
+      <Text style={[styles.title, textStyle]}>{title}</Text>
     </View>
   );
 };
