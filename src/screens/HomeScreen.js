@@ -14,7 +14,6 @@ import { Context as AuthContext } from "../context/AuthContext";
 import { Context as StudentContext } from "../context/StudentContext";
 
 const home_bg = require("../../assets/home_bg.png");
-const logo_casdvest = require("../../assets/logo_casdvest.png");
 const cardProps = [
   {
     id: "1",
@@ -56,19 +55,15 @@ const cardProps = [
 const HomeScreen = ({ navigation }) => {
   const { state } = useContext(StudentContext);
   const { signout } = useContext(AuthContext);
-
-  const [name, setName] = useState("NOME_ALUNO");
-
   return (
     <>
       <ImageBackground //TODO: fix the background
         source={home_bg}
         style={styles.containerBackground}
-        imageStyle={styles.imageBackground}
         resizeMode='cover'>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Header
-            title={`Bem-vindo, ${state.name}!`}
+            title={`Bem-vindo, ${state.first_name}!`}
             textStyle={{ fontSize: 24 }}
           />
           {cardProps.map((item) => (

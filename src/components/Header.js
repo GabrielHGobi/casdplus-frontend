@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Image, StyleSheet, Text } from "react-native";
+import { Context as StudentContext } from "../context/StudentContext";
 
 const Header = ({ title, textStyle }) => {
-  const logo_casdvest = require("../../assets/logo_casdvest.png");
+  const { state } = useContext(StudentContext);
+  let logo;
+  state.is_casdinho
+    ? (logo = require("../../assets/logo_casdinho.png"))
+    : (logo = require("../../assets/logo_casdvest.png"));
   return (
     <View style={{ alignItems: "center" }}>
-      <Image source={logo_casdvest} style={styles.logo} />
+      <Image source={logo} style={styles.logo} />
       <Text style={[styles.title, textStyle]}>{title}</Text>
     </View>
   );
