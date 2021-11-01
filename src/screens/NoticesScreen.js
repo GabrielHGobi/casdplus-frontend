@@ -8,25 +8,21 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { set } from "react-native-reanimated";
 
 import NoticeCard from "../components/NoticeCard";
 import TypeButtonOverlay from "../components/TypeButtonOverlay";
 import DateButtonOverlay from "../components/DateButtonOverlay";
 
-import { Context as NoticesContext } from '../context/NoticesContext';
+import { Context as NoticesContext } from "../context/NoticesContext";
 
 const logo_casdvest = require("../../assets/logo_casdvest.png");
 const MessageScreen = "Message";
 const NoticesScreen = ({ navigation }) => {
-
-  
-
   const { state, getMessages } = useContext(NoticesContext);
 
   useEffect(() => {
     getMessages();
-    navigation.addListener("didFocus", () => {
+    const listener = navigation.addListener("didFocus", () => {
       getMessages();
     });
 
@@ -34,8 +30,8 @@ const NoticesScreen = ({ navigation }) => {
       listener.remove();
     };
   }, []);
-  const [pressedType,setPressedType] = useState(false);
-  const [pressedDate,setPressedDate] = useState(false);
+  const [pressedType, setPressedType] = useState(false);
+  const [pressedDate, setPressedDate] = useState(false);
   return (
     <>
       <ImageBackground //TODO: fix the background
@@ -43,34 +39,44 @@ const NoticesScreen = ({ navigation }) => {
         imageStyle={styles.imageBackground}
         resizeMode='cover'>
         <View style={styles.logoContainer}>
-            <Image source={logo_casdvest} style={styles.logo} />
-            <Text style={styles.logoText}>Mural de Avisos</Text>
+          <Image source={logo_casdvest} style={styles.logo} />
+          <Text style={styles.logoText}>Mural de Avisos</Text>
         </View>
-        <View style = {styles.filtros}>
-          <TouchableOpacity style = {styles.filtroConteudo}
-          onPress = {() => {setPressedType(true)}}>
-            <Text style={styles.filtroText}>Tipo</Text>             
+        <View style={styles.filtros}>
+          <TouchableOpacity
+            style={styles.filtroConteudo}
+            onPress={() => {
+              setPressedType(true);
+            }}>
+            <Text style={styles.filtroText}>Tipo</Text>
           </TouchableOpacity>
-          <TouchableOpacity style = {styles.filtroConteudo}>
-            <Text style={styles.filtroText}
-            onPress = {() => {setPressedDate(true)}}>Data</Text>  
-          </TouchableOpacity>  
+          <TouchableOpacity style={styles.filtroConteudo}>
+            <Text
+              style={styles.filtroText}
+              onPress={() => {
+                setPressedDate(true);
+              }}>
+              Data
+            </Text>
+          </TouchableOpacity>
         </View>
-        {pressedType ?(
-          <TypeButtonOverlay onBackdropPressFunction = {setPressedType}/>)
-         : null}
-        {pressedDate ?(
-          <DateButtonOverlay onBackdropPressFunction = {setPressedDate}/>)
-         : null}
-        <View style = {styles.cardContainer}>
-          <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
-          {state.map((item) => (
-            <NoticeCard
-              key={item.title}
-              cardProps={item}
-              navScreen={MessageScreen}
-            />
-          ))}
+        {pressedType ? (
+          <TypeButtonOverlay onBackdropPressFunction={setPressedType} />
+        ) : null}
+        {pressedDate ? (
+          <DateButtonOverlay onBackdropPressFunction={setPressedDate} />
+        ) : null}
+        <View style={styles.cardContainer}>
+          <ScrollView
+            style={styles.scrollContainer}
+            showsVerticalScrollIndicator={false}>
+            {state.map((item) => (
+              <NoticeCard
+                key={item.title}
+                cardProps={item}
+                navScreen={MessageScreen}
+              />
+            ))}
           </ScrollView>
         </View>
       </ImageBackground>
@@ -92,7 +98,7 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#3192b3",
   },
-  scrollContainer:{  },
+  scrollContainer: {},
   imageBackground: {},
   logo: {},
   logoContainer: {
@@ -113,20 +119,20 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
   },
-  filtros:{
-    marginTop:32,
+  filtros: {
+    marginTop: 32,
     marginHorizontal: 30,
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  filtroConteudo:{
-    paddingHorizontal:20,
-    backgroundColor:"#F1F1F0",
-    borderRadius:5,
+  filtroConteudo: {
+    paddingHorizontal: 20,
+    backgroundColor: "#F1F1F0",
+    borderRadius: 5,
   },
-  filtroText:{
-    fontSize:20,
-    color: "black"
+  filtroText: {
+    fontSize: 20,
+    color: "black",
   },
 });
 
