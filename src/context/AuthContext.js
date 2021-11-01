@@ -7,7 +7,16 @@ import { navigate } from "../navigationRef";
 const authReducer = (state, action) => {
   switch (action.type) {
     case "add_error":
-      return { ...state, errorMessage: action.payload };
+      const errorMessage = action.payload;
+      if (errorMessage.includes("400")) {
+        return { ...state, errorMessage: "Login e/ou senha em branco" };
+      } else if (errorMessage.includes("404")) {
+        return { ...state, errorMessage: "Sem conexão com o servidor" };
+      } else if (errorMessage.includes("406")) {
+        return { ...state, errorMessage: "Login e/ou senha inválido(s)" };
+      } else {
+        return { ...state, errorMessage };
+      }
     case "clear_error_message":
       return { ...state, errorMessage: "" };
     case "signin":
