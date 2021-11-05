@@ -5,6 +5,13 @@ const NoticeCard = ({ cardProps,navScreen}) => {
   const data = new Date(cardProps.createdAt);
   const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul","Ago","Set","Out","Nov","Dez"];
   let dataFormatada = ((data.getDate() + " " + meses[(data.getMonth())] + " " + data.getFullYear()));
+  const labelDict = {
+    1: {'title':'Material', 'color': '#D1FEBC'},
+    2: {'title':'Simulado', 'color':'#FFC5B2'},
+    3: {'title':'Aula', 'color':'#F9B342'},
+    4: {'title':'Prova', 'color':'#B4B2FF'},
+    5: {'title':'Aviso', 'color':'#FF6431'},
+  };
   return (
     <TouchableOpacity onPress={() => navigate(navScreen,cardProps)} style={styles.container}>
       <View style={styles.textContainer}>
@@ -14,8 +21,8 @@ const NoticeCard = ({ cardProps,navScreen}) => {
         <View style={styles.authorContainer}>
           <Text style={styles.author}>{cardProps.author.first_name}</Text>
         </View>
-        <View style={styles.tipoContainer}>
-          <Text style={styles.tipo}>Material</Text>
+        <View style={[styles.tipoContainer,{backgroundColor: labelDict[cardProps.label_id].color}]}>
+          <Text style={styles.tipo}>{labelDict[cardProps.label_id].title}</Text>
         </View>
         <View style={styles.dateContainer}>
           <Text style={styles.date}>{dataFormatada}</Text>
@@ -51,7 +58,6 @@ const styles = StyleSheet.create({
   },
   tipoContainer: {
     alignItems: "center",
-    backgroundColor:"#D1FEBC",
     flex:1,
     borderRadius: 5,
     marginHorizontal:20,

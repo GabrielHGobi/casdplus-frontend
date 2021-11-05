@@ -1,15 +1,28 @@
 import React from "react";
-import { View, StyleSheet, Text,ImageBackground } from "react-native";
+import { View, StyleSheet, Text,ImageBackground,Image, ScrollView} from "react-native";
 
 const MessageScreen = ({navigation}) => {
   const data = new Date(navigation.getParam('createdAt'));
   const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul","Ago","Set","Out","Nov","Dez"];
   let dataFormatada = ((data.getDate() + " " + meses[(data.getMonth())] + " " + data.getFullYear()));
   let dataMinutos = data.getMinutes();
+  let dataHoras = data.getHours()
   if (dataMinutos < 10){
     dataMinutos = ("0" + dataMinutos);
   }
-  let horaFormatada = ((data.getHours() + ":" + dataMinutos));
+  if (dataHoras < 10){
+    dataHoras = ("0" + dataHoras);
+  }
+  const labelDict = {
+    1: {'title':'Material', 'color': '#D1FEBC'},
+    2: {'title':'Simulado', 'color':'#FFC5B2'},
+    3: {'title':'Aula', 'color':'#F9B342'},
+    4: {'title':'Prova', 'color':'#B4B2FF'},
+    5: {'title':'Aviso', 'color':'#FF6431'},
+  };
+  let horaFormatada = ((dataHoras + ":" + dataMinutos));
+
+  const adminIcon = require("../../assets/admin_icon.png")
   return (
     <ImageBackground 
     style = {styles.ImageBackground}
@@ -20,14 +33,15 @@ const MessageScreen = ({navigation}) => {
         <Text style={styles.titleText}>{navigation.getParam('title')}</Text>
       </View>
       <View style = {styles.authorContainer}>
+        <Image source={adminIcon} style={styles.image}/>
         <Text style={styles.authorText}>{navigation.getParam('author').first_name} {navigation.getParam('author').last_name}</Text>   
       </View>
-      <View style = {styles.bodyContainer}>     
+      <ScrollView style = {styles.bodyContainer}>     
         <Text style={styles.bodyText}>{navigation.getParam('body')}</Text>
-      </View>
+      </ScrollView>
       <View style = {styles.infoContainer}>
-        <View style={styles.tipoContainer}>    
-         <Text style={styles.infoText}>Material</Text>
+        <View style={[styles.tipoContainer,{backgroundColor: labelDict[navigation.getParam('label_id')].color}]}>    
+         <Text style={styles.infoText}>{labelDict[navigation.getParam('label_id')].title}</Text>
         </View>
         <View style={styles.dateContainer}>
           <Text style={styles.infoText}>{dataFormatada}</Text>
@@ -67,16 +81,19 @@ const styles = StyleSheet.create({
     // backgroundColor:"red",
   },
   authorContainer:{
-    justifyContent: "center",
-    marginTop: 5,
-    flex:0.1,
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems:"center",
+    width:"50%",
+    // marginTop: 5,
+    flex:0.15,
   },
   authorText:{
     fontFamily: "MontserratSemiBold",
     fontSize: 16,
   },
   bodyContainer:{
-    flex: 0.7,
+    flex: 0.8,
     marginHorizontal: 30,
     marginTop:20,
     marginBottom:40,
@@ -99,7 +116,6 @@ const styles = StyleSheet.create({
   tipoContainer: {
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor:"#D1FEBC",
     flex:1,
     borderRadius: 5,
     marginHorizontal:20,
@@ -109,6 +125,10 @@ const styles = StyleSheet.create({
     flex:1,
     alignItems: "center",
     marginHorizontal:20,
+  },
+  image: {
+    width: "20%",
+    height: "70%",  
   },
 });
 

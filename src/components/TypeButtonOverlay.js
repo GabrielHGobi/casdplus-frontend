@@ -1,9 +1,9 @@
 import React from "react";
-import { StyleSheet, Text, View,TouchableOpacity  } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity  } from "react-native";
 import { Overlay } from "react-native-elements";
 
 
-const TypeButtonOverlay = ({onBackdropPressFunction}) => {
+const TypeButtonOverlay = ({onBackdropPressFunction, filterType}) => {
   return (
     <>
       <Overlay
@@ -12,23 +12,25 @@ const TypeButtonOverlay = ({onBackdropPressFunction}) => {
         overlayStyle={styles.overlay}>
         <Text style={styles.upperText}>Selecione o tipo para filtrar:</Text>
         <View style={styles.stylesContainer}>
-          <TouchableOpacity style={[styles.tipoContainer, {backgroundColor:"#D1FEBC"}]}>
+          <TouchableOpacity onPress = {() =>{filterType(1)}} style={[styles.tipoContainer, {backgroundColor:"#D1FEBC"}]}>
             <Text style={styles.tipo}>Material</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.tipoContainer, {backgroundColor:"#FFC5B2"}]}>
+          <TouchableOpacity onPress = {() =>{filterType(2)}} style={[styles.tipoContainer, {backgroundColor:"#FFC5B2"}]}>
             <Text style={styles.tipo}>Simulado</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.stylesContainer}>
-          <TouchableOpacity style={[styles.tipoContainer, {backgroundColor:"#F9B342"}]}>
+          
+          <TouchableOpacity onPress = {() =>{filterType(3)}} style={[styles.tipoContainer, {backgroundColor:"#F9B342"}]}>
             <Text style={styles.tipo}>Aula</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.tipoContainer, {backgroundColor:"#B4B2FF"}]}>
+          <TouchableOpacity onPress = {() =>{filterType(4)}} style={[styles.tipoContainer, {backgroundColor:"#B4B2FF"}]}>
             <Text style={styles.tipo}>Prova</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.stylesContainer}>
-          <TouchableOpacity style={[styles.tipoContainer, {backgroundColor:"#FF6431"}]}>
+          
+          <TouchableOpacity onPress = {() =>{filterType(5)}} style={[styles.tipoContainer, {backgroundColor:"#FF6431"}]}>
             <Text style={styles.tipo}>Aviso</Text>
           </TouchableOpacity>
         </View>
@@ -68,7 +70,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginHorizontal:20,
     width: 100,
-    height:25,
+    height:35,
   },
   tipo :{
     fontSize: 12,
