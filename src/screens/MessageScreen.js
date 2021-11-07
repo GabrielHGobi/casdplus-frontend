@@ -14,11 +14,12 @@ const MessageScreen = ({navigation}) => {
     dataHoras = ("0" + dataHoras);
   }
   const labelDict = {
-    1: {'title':'Material', 'color': '#D1FEBC'},
-    2: {'title':'Simulado', 'color':'#FFC5B2'},
-    3: {'title':'Aula', 'color':'#F9B342'},
-    4: {'title':'Prova', 'color':'#B4B2FF'},
-    5: {'title':'Aviso', 'color':'#FF6431'},
+    1: {'title':'Evento', 'color': '#D1FEBC'},
+    2: {'title':'Horário', 'color':'#FFC5B2'},
+    3: {'title':'Material', 'color':'#F9B342'},
+    4: {'title':'Simulado', 'color':'#B4B2FF'},
+    5: {'title':'Vestibular', 'color':'#FF6431'},
+    6: {'title':'Outros', 'color':'#45ECCE'},
   };
   let horaFormatada = ((dataHoras + ":" + dataMinutos));
 
@@ -71,6 +72,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 0.1,
     marginTop:20,
+    marginHorizontal:10,
   },
   titleText:{
     fontFamily: "MontserratBold",

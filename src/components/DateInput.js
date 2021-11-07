@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { format } from "date-fns";
 
-const DateInput = ({ date, setDate, placeholder,setCheckChangeDate,checkChangeDate }) => {
+const DateInput = ({ date, setDate, placeholder }) => {
   const [show, setShow] = useState(false);
   const [dateChanged, setDateChanged] = useState(false);
 
@@ -14,7 +14,6 @@ const DateInput = ({ date, setDate, placeholder,setCheckChangeDate,checkChangeDa
     formattedDate = format(date, "dd/MM/yyyy");
     setShow(false);
     setDateChanged(true);
-    setCheckChangeDate(checkChangeDate+1);
   };
 
   return (

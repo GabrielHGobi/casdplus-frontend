@@ -5,7 +5,7 @@ import { Overlay } from "react-native-elements";
 import DateInput from "../components/DateInput";
 
 const DateButtonOverlay = ({onBackdropPressFunction,changeInitialDate,ChangeFinalDate,initialDate,finalDate,setCheckChangeDate,checkChangeDate}) => {
-  
+
   const calendar_img = require("../../assets/ferramenta-de-simbolo-de-interface-de-calendario.png");
   return (
     <>
@@ -20,17 +20,18 @@ const DateButtonOverlay = ({onBackdropPressFunction,changeInitialDate,ChangeFina
           date={initialDate}
           setDate={changeInitialDate}
           placeholder='Data inicial'
-          checkChangeDate = {checkChangeDate}
-          setCheckChangeDate = {setCheckChangeDate}
         />
         <DateInput
           date={finalDate}
           setDate={ChangeFinalDate}
           placeholder='Data final'
-          checkChangeDate = {checkChangeDate}
-          setCheckChangeDate = {setCheckChangeDate}
         />
       </View>
+      <View style={styles.stylesContainer}>
+          <TouchableOpacity onPress = {() =>{setCheckChangeDate(checkChangeDate+1)}} style={[styles.tipoContainer, {backgroundColor:"#F9F9F4",borderWidth: 2,}]}>
+            <Text style={{fontSize:14,fontFamily: "MontserratMedium",}}>Aplicar Filtro</Text>
+          </TouchableOpacity>
+        </View>
       <Image source={calendar_img} style={styles.image} />
       </Overlay>
     </>
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
     marginTop:20, 
   },
   image: {
-    marginTop: 30,
+    marginTop: 10,
     width: "35%",
     height: "35%",
     borderRadius: 10,
@@ -72,6 +73,23 @@ const styles = StyleSheet.create({
     alignItems:"center",
     justifyContent:"center"},
 
+  stylesContainer:{
+    marginHorizontal: 50,
+    marginTop: 20,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start' // if you want to fill rows left to right
+    },
+  
+  tipoContainer: {
+    alignItems: "center",
+    justifyContent:"center",
+    flex:1,
+    borderRadius: 5,
+    marginHorizontal:20,
+    width: 100,
+    height:35,
+    },
 });
 
 export default DateButtonOverlay;

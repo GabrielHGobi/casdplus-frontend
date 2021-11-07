@@ -1,37 +1,41 @@
-import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity  } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text, View, TouchableOpacity} from "react-native";
 import { Overlay } from "react-native-elements";
 
 
-const TypeButtonOverlay = ({onBackdropPressFunction, filterType}) => {
+const TypeButtonOverlay = ({onBackdropPressFunction, filterType, actualFilter}) => {
+  const [tempFilter, setTempFilter] = useState(actualFilter);
   return (
     <>
       <Overlay
         isVisible={true}
-        onBackdropPress={() => {onBackdropPressFunction(false)}}
+        onBackdropPress={() => {onBackdropPressFunction(false);filterType(tempFilter)}}
         overlayStyle={styles.overlay}>
         <Text style={styles.upperText}>Selecione o tipo para filtrar:</Text>
         <View style={styles.stylesContainer}>
-          <TouchableOpacity onPress = {() =>{filterType(1)}} style={[styles.tipoContainer, {backgroundColor:"#D1FEBC"}]}>
+          <TouchableOpacity onPress = {() =>{setTempFilter(1)}} style={[styles.tipoContainer, {backgroundColor:"#D1FEBC"}]}>
+            <Text style={styles.tipo}>Evento</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress = {() =>{setTempFilter(2)}} style={[styles.tipoContainer, {backgroundColor:"#FFC5B2"}]}>
+            <Text style={styles.tipo}>Horário</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.stylesContainer}>
+          
+          <TouchableOpacity onPress = {() =>{setTempFilter(3)}} style={[styles.tipoContainer, {backgroundColor:"#F9B342"}]}>
             <Text style={styles.tipo}>Material</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress = {() =>{filterType(2)}} style={[styles.tipoContainer, {backgroundColor:"#FFC5B2"}]}>
+          <TouchableOpacity onPress = {() =>{setTempFilter(4)}} style={[styles.tipoContainer, {backgroundColor:"#B4B2FF"}]}>
             <Text style={styles.tipo}>Simulado</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.stylesContainer}>
           
-          <TouchableOpacity onPress = {() =>{filterType(3)}} style={[styles.tipoContainer, {backgroundColor:"#F9B342"}]}>
-            <Text style={styles.tipo}>Aula</Text>
+          <TouchableOpacity onPress = {() =>{setTempFilter(5)}} style={[styles.tipoContainer, {backgroundColor:"#FF6431"}]}>
+            <Text style={styles.tipo}>Vestibular</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress = {() =>{filterType(4)}} style={[styles.tipoContainer, {backgroundColor:"#B4B2FF"}]}>
-            <Text style={styles.tipo}>Prova</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.stylesContainer}>
-          
-          <TouchableOpacity onPress = {() =>{filterType(5)}} style={[styles.tipoContainer, {backgroundColor:"#FF6431"}]}>
-            <Text style={styles.tipo}>Aviso</Text>
+          <TouchableOpacity onPress = {() =>{setTempFilter(5)}} style={[styles.tipoContainer, {backgroundColor:"#45ECCE"}]}>
+            <Text style={styles.tipo}>Outros</Text>
           </TouchableOpacity>
         </View>
       </Overlay>

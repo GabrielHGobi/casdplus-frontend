@@ -13,7 +13,6 @@ import TypeButtonOverlay from "../components/TypeButtonOverlay";
 import DateButtonOverlay from "../components/DateButtonOverlay";
 
 import { Context as NoticesContext } from "../context/NoticesContext";
-import { fi } from "date-fns/locale";
 
 const NoticesScreen = ({ navigation }) => {
   const { state, getMessages } = useContext(NoticesContext);
@@ -44,13 +43,15 @@ const NoticesScreen = ({ navigation }) => {
       setCards(state);
     }
     else{
-      const filtered = state.filter(item => item.label_id == filterTypeValue);
+      const filtered = cards.filter(item => item.label_id == filterTypeValue);
       setCards(filtered);
     }
   },[filterTypeValue]);
   useEffect(()=>{
     if(checkChangeDate!=0){
-      const filtered = state.filter(item => (item.createdAt >=initialDate)&&(item.createdAt <=finalDate));
+      const filtered = cards.filter(
+        item => new Date(item.createdAt).getTime() >= new Date(initialDate).getTime() && 
+        new Date(item.createdAt).getTime() <= new Date(finalDate).getTime());
       setCards(filtered)
     }
   },[checkChangeDate]);
@@ -84,7 +85,7 @@ const NoticesScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         {pressedType ? (
-          <TypeButtonOverlay onBackdropPressFunction={setPressedType} filterType = {setfilterTypeValue}/>
+          <TypeButtonOverlay onBackdropPressFunction={setPressedType} filterType = {setfilterTypeValue} actualFilter = {filterTypeValue}/>
         ) : null}
         {pressedDate ? (
           <DateButtonOverlay onBackdropPressFunction={setPressedDate}

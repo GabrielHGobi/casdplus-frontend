@@ -6,11 +6,12 @@ const NoticeCard = ({ cardProps,navScreen}) => {
   const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul","Ago","Set","Out","Nov","Dez"];
   let dataFormatada = ((data.getDate() + " " + meses[(data.getMonth())] + " " + data.getFullYear()));
   const labelDict = {
-    1: {'title':'Material', 'color': '#D1FEBC'},
-    2: {'title':'Simulado', 'color':'#FFC5B2'},
-    3: {'title':'Aula', 'color':'#F9B342'},
-    4: {'title':'Prova', 'color':'#B4B2FF'},
-    5: {'title':'Aviso', 'color':'#FF6431'},
+    1: {'title':'Evento', 'color': '#D1FEBC'},
+    2: {'title':'Horário', 'color':'#FFC5B2'},
+    3: {'title':'Material', 'color':'#F9B342'},
+    4: {'title':'Simulado', 'color':'#B4B2FF'},
+    5: {'title':'Vestibular', 'color':'#FF6431'},
+    6: {'title':'Outros', 'color':'#45ECCE'},
   };
   return (
     <TouchableOpacity onPress={() => navigate(navScreen,cardProps)} style={styles.container}>
