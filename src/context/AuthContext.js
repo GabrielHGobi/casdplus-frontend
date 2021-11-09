@@ -72,6 +72,7 @@ const signout = (dispatch) => async () => {
     dispatch({ type: "signout" });
     navigate("Login");
   } catch (err) {
+    await AsyncStorage.removeItem("token");
     console.log(err.message);
   }
 };

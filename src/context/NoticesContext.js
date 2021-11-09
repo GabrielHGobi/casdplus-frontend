@@ -17,6 +17,7 @@ const getMessages = (dispatch) => {
     const { state } = useContext(AuthContext);
     return async () => {
         try {
+            console.log(state.token)
             response = await studentAPI.get('/messages',{
                 headers: { Authorization: `Bearer ${state.token}` },
             });

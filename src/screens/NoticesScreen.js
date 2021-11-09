@@ -102,7 +102,7 @@ const NoticesScreen = ({ navigation }) => {
             showsVerticalScrollIndicator={false}>
             {cards.map((item) => (
               <NoticeCard
-                key={item.title}
+                key={item.id}
                 cardProps={item}
                 navScreen={"Message"}
               />
