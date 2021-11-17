@@ -16,51 +16,36 @@ import { Context as NoticesContext } from "../context/NoticesContext";
 
 const NoticesScreen = ({ navigation }) => {
   const { state, getMessages } = useContext(NoticesContext);
-  const [cards, setCards] = useState(state);
-  const [filterTypeValue, setfilterTypeValue] = useState(0);
+  const [cards, setCards] = useState(state.messages);
+
+  const [label_id, setLabel_id] = useState(0);
   const [initialDate, setInitialDate] = useState(new Date());
   const [finalDate, setFinalDate] = useState(new Date());
-  const[checkChangeDate,setCheckChangeDate] = useState(0);
-  const clearButton = () =>{
-    setCards(state);
-    setfilterTypeValue(0);
-    setInitialDate(new Date());
-    setFinalDate(new Date())
-    setCheckChangeDate(0);
-  }
+
   useEffect(() => {
-    getMessages();
+    getMessages({ initialDate, finalDate, label_id });
     const listener = navigation.addListener("didFocus", () => {
-      getMessages();
+      getMessages({ initialDate, finalDate, label_id });
     });
-  
     return () => {
       listener.remove();
     };
-  }, []);
-  useEffect(() => {
-    if(filterTypeValue == 0){
-      setCards(state);
-    }
-    else{
-      const filtered = cards.filter(item => item.label_id == filterTypeValue);
-      setCards(filtered);
-    }
-  },[filterTypeValue]);
-  useEffect(()=>{
-    if(checkChangeDate!=0){
-      const filtered = cards.filter(
-        item => new Date(item.createdAt).getTime() >= new Date(initialDate).getTime() && 
-        new Date(item.createdAt).getTime() <= new Date(finalDate).getTime());
-      setCards(filtered)
-    }
-  },[checkChangeDate]);
+  }, [initialDate, finalDate, label_id]);
+
+  const clearButton = () => {
+    setLabel_id(0);
+    setInitialDate(new Date());
+    setFinalDate(new Date());
+  };
+
   const [pressedType, setPressedType] = useState(false);
   const [pressedDate, setPressedDate] = useState(false);
+
   return (
     <>
       <View style={styles.containerBackground}>
         <Header title='Mural de avisos' />
+
         <View style={styles.filtros}>
           <TouchableOpacity
             style={styles.filtroConteudo}
@@ -69,6 +54,7 @@ const NoticesScreen = ({ navigation }) => {
             }}>
             <Text style={styles.filtroText}>Tipo</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.filtroConteudo}
             onPress={() => {
@@ -76,6 +62,7 @@ const NoticesScreen = ({ navigation }) => {
             }}>
             <Text style={styles.filtroText}>Limpar</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.filtroConteudo}
             onPress={() => {
@@ -84,18 +71,25 @@ const NoticesScreen = ({ navigation }) => {
             <Text style={styles.filtroText}>Data</Text>
           </TouchableOpacity>
         </View>
+
         {pressedType ? (
-          <TypeButtonOverlay onBackdropPressFunction={setPressedType} filterType = {setfilterTypeValue} actualFilter = {filterTypeValue}/>
+          <TypeButtonOverlay
+            onBackdropPressFunction={setPressedType}
+            filterType={setLabel_id}
+            actualFilter={label_id}
+          />
         ) : null}
+
         {pressedDate ? (
-          <DateButtonOverlay onBackdropPressFunction={setPressedDate}
-          initialDate = {initialDate}
-          finalDate = {finalDate} 
-          changeInitialDate = {setInitialDate}  
-          ChangeFinalDate = {setFinalDate}
-          setCheckChangeDate = {setCheckChangeDate}
-          checkChangeDate = {checkChangeDate}/>
+          <DateButtonOverlay
+            onBackdropPressFunction={setPressedDate}
+            initialDate={initialDate}
+            finalDate={finalDate}
+            changeInitialDate={setInitialDate}
+            ChangeFinalDate={setFinalDate}
+          />
         ) : null}
+
         <View style={styles.cardContainer}>
           <ScrollView
             style={styles.scrollContainer}
@@ -133,13 +127,12 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
   },
   filtros: {
-    // marginTop: 32,
     marginHorizontal: 30,
     flexDirection: "row",
     justifyContent: "space-between",
   },
   filtroConteudo: {
-    justifyContent:"center",
+    justifyContent: "center",
     height: 35,
     paddingHorizontal: 20,
     backgroundColor: "#F9F9F4",
