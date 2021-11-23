@@ -20,6 +20,7 @@ const FormInput = ({
         numberOfLines={numberOfLines}
         textAlign='left'
         autoCorrect={false}
+        placeholderTextColor='#C7C7CD'
       />
     </View>
   );

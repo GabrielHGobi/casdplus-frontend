@@ -1,19 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import PaintButton from "../components/PaintButton";
 import Header from "../components/Header";
 import FormInput from "../components/FormInput";
 import Spacer from "../components/Spacer";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import { format } from "date-fns";
 import DateInput from "../components/DateInput";
+import UploadImageButton from "../components/UploadImageButton";
+
+import { Context as AbsenceContext } from "../context/AbsenceContext";
 
 const AbsenceScreen = () => {
-  const [initialDate, setInitialDate] = useState(new Date());
-  const [finalDate, setFinalDate] = useState(new Date());
+  var image = new FormData();
+  const [date, setDate] = useState(new Date());
   const [justification, setJustification] = useState("");
+  const [imageURI, setImageURI] = useState(null);
 
-  const [date, setDate] = useState(new Date(2021, 1, 22));
+  const { sendAbsenceJustification } = useContext(AbsenceContext);
 
   return (
     <View style={styles.container}>
@@ -21,14 +23,9 @@ const AbsenceScreen = () => {
 
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <DateInput
-          date={initialDate}
-          setDate={setInitialDate}
-          placeholder='Data inicial'
-        />
-        <DateInput
-          date={finalDate}
-          setDate={setFinalDate}
-          placeholder='Data final'
+          date={date}
+          setDate={setDate}
+          placeholder='Data da justificativa'
         />
       </View>
       <Spacer>
@@ -41,14 +38,20 @@ const AbsenceScreen = () => {
           numberOfLines={15}
         />
       </Spacer>
+
+      <UploadImageButton setImage={setImageURI} />
+
       <PaintButton
         style={styles.paint}
         buttonText='Enviar'
         primaryColor='#f9b342'
         secundaryColor='#3192b3'
-        onPress={() => {}}
+        onPress={() => {
+          console.log(imageURI);
+          image.append("file", imageURI);
+          sendAbsenceJustification({ date, justification, image });
+        }}
       />
-      {/* <DateTimePicker mode='date' value={date} onChange={changeDate} /> */}
     </View>
   );
 };

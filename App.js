@@ -14,7 +14,8 @@ import MessageScreen from "./src/screens/MessageScreen";
 
 import { Provider as AuthProvider } from "./src/context/AuthContext";
 import { Provider as StudentProvider } from "./src/context/StudentContext";
-import { Provider as NoticesProvider } from './src/context/NoticesContext';
+import { Provider as NoticesProvider } from "./src/context/NoticesContext";
+import { Provider as AbsenceProvider } from "./src/context/AbsenceContext";
 import { setNavigator } from "./src/navigationRef";
 
 const switchNavigator = createSwitchNavigator({
@@ -38,12 +39,14 @@ export default () => {
     <AuthProvider>
       <StudentProvider>
         <NoticesProvider>
-        <StatusBar backgroundColor='#195967' />
-        <App
-          ref={(navigator) => {
-            setNavigator(navigator);
-          }}
-        />
+          <AbsenceProvider>
+            <StatusBar backgroundColor='#195967' />
+            <App
+              ref={(navigator) => {
+                setNavigator(navigator);
+              }}
+            />
+          </AbsenceProvider>
         </NoticesProvider>
       </StudentProvider>
     </AuthProvider>

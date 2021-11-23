@@ -20,7 +20,7 @@ const DateInput = ({ date, setDate, placeholder }) => {
     <>
       <TouchableOpacity onPress={() => setShow(true)}>
         <View style={styles.container}>
-          <Text style={styles.text}>
+          <Text style={dateChanged ? styles.text : styles.placeholder}>
             {dateChanged ? formattedDate : placeholder}
           </Text>
         </View>
@@ -34,7 +34,6 @@ const DateInput = ({ date, setDate, placeholder }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 120,
     height: 40,
     backgroundColor: "white",
     borderColor: "#f9b342",
@@ -48,7 +47,17 @@ const styles = StyleSheet.create({
     fontFamily: "MontserratRegular",
     fontWeight: "normal",
     fontSize: 14,
+    lineHeight: 14,
     textAlign: "center",
+    color: "black",
+  },
+  placeholder: {
+    fontFamily: "MontserratRegular",
+    fontWeight: "normal",
+    fontSize: 14,
+    lineHeight: 14,
+    textAlign: "center",
+    color: "#C7C7CD",
   },
 });
 
