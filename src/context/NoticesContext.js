@@ -27,7 +27,6 @@ const getMessages = (dispatch) => {
         params.start_date = start_date;
         params.end_date = end_date;
       }
-      console.log(params);
       response = await studentAPI.get("/messages", {
         headers: { Authorization: `Bearer ${state.token}` },
         params,

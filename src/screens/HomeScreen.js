@@ -31,20 +31,13 @@ const cardProps = [
   },
   {
     id: "3",
-    title: "Simulados\ne avaliações",
-    subtitle: "Acesse seus resultados",
-    img: require("../../assets/essays_img.png"),
-    navScreen: "Essays",
-  },
-  {
-    id: "4",
     title: "Horário\nde aulas",
     subtitle: "Acesse seu cronograma\nsemanal",
     img: require("../../assets/schedule_img.png"),
     navScreen: "Schedule",
   },
   {
-    id: "5",
+    id: "4",
     title: "Justificativa\nde faltas",
     subtitle: "Preencha o documento",
     img: require("../../assets/absence_img.png"),
