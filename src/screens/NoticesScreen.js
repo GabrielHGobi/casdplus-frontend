@@ -24,6 +24,7 @@ const NoticesScreen = ({ navigation }) => {
 
   useEffect(() => {
     getMessages({ initialDate, finalDate, label_id });
+    console.log(state.messages);
     const listener = navigation.addListener("didFocus", () => {
       getMessages({ initialDate, finalDate, label_id });
     });

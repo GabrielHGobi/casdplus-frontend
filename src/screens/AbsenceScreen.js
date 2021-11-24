@@ -10,7 +10,7 @@ import UploadImageButton from "../components/UploadImageButton";
 import { Context as AbsenceContext } from "../context/AbsenceContext";
 
 const AbsenceScreen = () => {
-  var image = new FormData();
+  var formdata = new FormData();
   const [date, setDate] = useState(new Date());
   const [justification, setJustification] = useState("");
   const [imageURI, setImageURI] = useState(null);
@@ -47,8 +47,9 @@ const AbsenceScreen = () => {
         primaryColor='#f9b342'
         secundaryColor='#3192b3'
         onPress={() => {
-          console.log(imageURI);
-          image.append("file", imageURI);
+          formdata.append("date", date);
+          formdata.append("justification", justification);
+          formdata.append("file", imageURI);
           sendAbsenceJustification({ date, justification, image });
         }}
       />
