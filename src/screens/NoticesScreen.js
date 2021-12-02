@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import {
+  RefreshControl, SafeAreaView,
   View,
   StyleSheet,
   Text,
@@ -14,7 +15,23 @@ import DateButtonOverlay from "../components/DateButtonOverlay";
 
 import { Context as NoticesContext } from "../context/NoticesContext";
 
+
+
+
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
+
 const NoticesScreen = ({ navigation }) => {
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    getMessages(NoticesContext);
+    wait(500).then(() => setRefreshing(false));
+  }, []);
+
   const { state, getMessages } = useContext(NoticesContext);
   const [cards, setCards] = useState(state.messages);
 
@@ -43,8 +60,10 @@ const NoticesScreen = ({ navigation }) => {
   const [pressedDate, setPressedDate] = useState(false);
 
   return (
-    <>
-      <View style={styles.containerBackground}>
+    <SafeAreaView style = {styles.container}>
+      <ScrollView style={styles.containerBackground}
+      showsVerticalScrollIndicator={false}
+      refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />  }>
         <Header title='Mural de avisos' />
 
         <View style={styles.filtros}>
@@ -92,7 +111,7 @@ const NoticesScreen = ({ navigation }) => {
         ) : null}
 
         <View style={styles.cardContainer}>
-          <ScrollView
+          <View
             style={styles.scrollContainer}
             showsVerticalScrollIndicator={false}>
             {cards.map((item) => (
@@ -102,10 +121,10 @@ const NoticesScreen = ({ navigation }) => {
                 navScreen={"Message"}
               />
             ))}
-          </ScrollView>
+          </View>
         </View>
-      </View>
-    </>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -116,6 +135,9 @@ NoticesScreen.navigationOptions = () => {
 };
 
 const styles = StyleSheet.create({
+  container:{
+    flex: 1,
+  },
   containerBackground: {
     flex: 1,
     backgroundColor: "#3192b3",
