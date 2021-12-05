@@ -12,6 +12,7 @@ import ScreenCard from "../components/ScreenCard";
 import Header from "../components/Header";
 import { Context as AuthContext } from "../context/AuthContext";
 import { Context as StudentContext } from "../context/StudentContext";
+import PaintButton from "../components/PaintButton";
 
 const home_bg = require("../../assets/home_bg.png");
 const cardProps = [
@@ -68,7 +69,13 @@ const HomeScreen = ({ navigation }) => {
               navScreen={item.navScreen}
             />
           ))}
-          <Button title='Logout' onPress={signout} />
+          <PaintButton
+        style={styles.paint}
+        buttonText='Logout'
+        primaryColor='#f9b342'
+        secundaryColor='#3192b3'
+        onPress={signout}
+      />
         </ScrollView>
       </ImageBackground>
     </>
@@ -87,6 +94,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignContent: "center",
     backgroundColor: "#3192b3",
+  },
+  paint: {
+    marginVertical: 20,
   },
 });
 
