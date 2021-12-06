@@ -1,130 +1,85 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import {
-  RefreshControl, SafeAreaView,
   View,
   StyleSheet,
   Text,
-  ScrollView,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import Header from "../components/Header";
 import NoticeCard from "../components/NoticeCard";
-import TypeButtonOverlay from "../components/TypeButtonOverlay";
-import DateButtonOverlay from "../components/DateButtonOverlay";
+import NoticesListPlaceholder from "../components/NoticesListPlaceholder";
+import TypeFilterButton from "../components/TypeFilterButton";
+import DateFilterButton from "../components/DateFilterButton";
+import MyDateRangePicker from "../components/MyDateRangePicker";
 
 import { Context as NoticesContext } from "../context/NoticesContext";
 
-
-
-
 const wait = (timeout) => {
-  return new Promise(resolve => setTimeout(resolve, timeout));
-}
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 
 const NoticesScreen = ({ navigation }) => {
+  const [refreshing, setRefreshing] = useState(false);
+  const [openDataPicker, setOpenDataPicker] = useState(false);
+  const { state, getMessages, getPinnedMessage, clearFilters } = useContext(NoticesContext);
 
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = useCallback(() => {
     setRefreshing(true);
-    getMessages(NoticesContext);
-    wait(500).then(() => setRefreshing(false));
+    getPinnedMessage();
+    getMessages(state.params);
+    wait(250).then(() => setRefreshing(false));
   }, []);
 
-  const { state, getMessages } = useContext(NoticesContext);
-  const [cards, setCards] = useState(state.messages);
-
-  const [label_id, setLabel_id] = useState(0);
-  const [initialDate, setInitialDate] = useState(new Date());
-  const [finalDate, setFinalDate] = useState(new Date());
-
   useEffect(() => {
-    getMessages({ initialDate, finalDate, label_id });
-    console.log(state.messages);
+    getPinnedMessage();
+    getMessages(state.params);
     const listener = navigation.addListener("didFocus", () => {
-      getMessages({ initialDate, finalDate, label_id });
+      getPinnedMessage();
+      getMessages(state.params);
     });
     return () => {
       listener.remove();
     };
-  }, [initialDate, finalDate, label_id]);
-
-  const clearButton = () => {
-    setLabel_id(0);
-    setInitialDate(new Date());
-    setFinalDate(new Date());
-  };
-
-  const [pressedType, setPressedType] = useState(false);
-  const [pressedDate, setPressedDate] = useState(false);
+  }, [state.params, state.messages]);
 
   return (
-    <SafeAreaView style = {styles.container}>
-      <ScrollView style={styles.containerBackground}
-      showsVerticalScrollIndicator={false}
-      refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />  }>
+    <>
+      <View style={styles.containerBackground}>
         <Header title='Mural de avisos' />
-
+        <MyDateRangePicker
+          open={openDataPicker}
+          setOpen={() => setOpenDataPicker(false)}
+        />
         <View style={styles.filtros}>
+          <TypeFilterButton />
+          <DateFilterButton onPress={() => setOpenDataPicker(true)} />
           <TouchableOpacity
-            style={styles.filtroConteudo}
             onPress={() => {
-              setPressedType(true);
+              clearFilters();
             }}>
-            <Text style={styles.filtroText}>Tipo</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.filtroConteudo}
-            onPress={() => {
-              clearButton();
-            }}>
-            <Text style={styles.filtroText}>Limpar</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.filtroConteudo}
-            onPress={() => {
-              setPressedDate(true);
-            }}>
-            <Text style={styles.filtroText}>Data</Text>
+            <MaterialCommunityIcons
+              name='filter-remove-outline'
+              size={35}
+              color='white'
+            />
           </TouchableOpacity>
         </View>
-
-        {pressedType ? (
-          <TypeButtonOverlay
-            onBackdropPressFunction={setPressedType}
-            filterType={setLabel_id}
-            actualFilter={label_id}
-          />
-        ) : null}
-
-        {pressedDate ? (
-          <DateButtonOverlay
-            onBackdropPressFunction={setPressedDate}
-            initialDate={initialDate}
-            finalDate={finalDate}
-            changeInitialDate={setInitialDate}
-            ChangeFinalDate={setFinalDate}
-          />
-        ) : null}
 
         <View style={styles.cardContainer}>
-          <View
-            style={styles.scrollContainer}
-            showsVerticalScrollIndicator={false}>
-            {cards.map((item) => (
-              <NoticeCard
-                key={item.id}
-                cardProps={item}
-                navScreen={"Message"}
-              />
-            ))}
-          </View>
+          <FlatList
+            data={state.messages}
+            keyExtractor={(item) => String(item.id)}
+            renderItem={({ item }) => <NoticeCard cardProps={item} />}
+            onRefresh={onRefresh}
+            refreshing={refreshing}
+            ListEmptyComponent={<NoticesListPlaceholder />}
+          />
         </View>
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+    </>
   );
 };
 
@@ -135,35 +90,20 @@ NoticesScreen.navigationOptions = () => {
 };
 
 const styles = StyleSheet.create({
-  container:{
-    flex: 1,
-  },
   containerBackground: {
-    flex: 1,
     backgroundColor: "#3192b3",
+    flex: 1,
   },
   cardContainer: {
-    marginTop: 15,
     flex: 1,
+    marginTop: 15,
     backgroundColor: "white",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
   },
   filtros: {
-    marginHorizontal: 30,
     flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  filtroConteudo: {
-    justifyContent: "center",
-    height: 35,
-    paddingHorizontal: 20,
-    backgroundColor: "#F9F9F4",
-    borderRadius: 5,
-  },
-  filtroText: {
-    fontSize: 20,
-    color: "black",
+    justifyContent: "space-around",
   },
 });
 

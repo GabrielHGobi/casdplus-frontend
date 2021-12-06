@@ -1,13 +1,40 @@
 import { useContext } from "react";
 import createDataContext from "./createDataContext";
 import { Context as AuthContext } from "./AuthContext";
-import { navigate } from "../navigationRef";
 import studentAPI from "../api/CASDplus_student";
+
+function isNotPinned(item) {
+  item.pin ? false : true;
+};
 
 const noticesReducer = (state, action) => {
   switch (action.type) {
     case "get_messages":
-      return { ...state, messages: action.payload };
+      let messages =  action.payload.filter(function (message) {
+        return !message.pin;
+      })
+      messages.unshift(state.pinMessage);
+      return { ...state, messages: messages};
+    case "pin_message":
+      return { ...state, pinMessage: action.payload };
+    case "set_label":
+      return {
+        ...state,
+        params: { ...state.params, label_id: action.payload },
+      };
+    case "set_dates":
+      if (action.payload.start_date != action.payload.end_date) {
+        return {
+          ...state,
+          params: {
+            ...state.params,
+            start_date: action.payload.start_date,
+            end_date: action.payload.end_date,
+          },
+        };
+      } else return state;
+    case "clear_filters":
+      return { ...state, params: {} };
     default:
       return state;
   }
@@ -15,21 +42,11 @@ const noticesReducer = (state, action) => {
 
 const getMessages = (dispatch) => {
   const { state } = useContext(AuthContext);
-  return async ({ initialDate, finalDate, label_id }) => {
+  return async (queryParams) => {
     try {
-      const params = {};
-      const start_date = initialDate.toISOString().slice(0, 10);
-      const end_date = finalDate.toISOString().slice(0, 10);
-      if (label_id != 0) {
-        params.label_id = label_id;
-      }
-      if (start_date != end_date) {
-        params.start_date = start_date;
-        params.end_date = end_date;
-      }
       response = await studentAPI.get("/messages", {
         headers: { Authorization: `Bearer ${state.token}` },
-        params,
+        params: queryParams,
       });
       dispatch({ type: "get_messages", payload: response.data });
     } catch (err) {
@@ -38,8 +55,45 @@ const getMessages = (dispatch) => {
   };
 };
 
+const getPinnedMessage = (dispatch) => {
+  const { state } = useContext(AuthContext);
+  return async () => {
+    try {
+      response = await studentAPI.get("/messages", {
+        headers: { Authorization: `Bearer ${state.token}` }
+      });
+      let pinned_msg = response.data.find(item => item.pin === true);
+      dispatch({ type: "pin_message", payload: pinned_msg });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+const setLabelID = (dispatch) => {
+  return ({ label_id }) => {
+    dispatch({ type: "set_label", payload: label_id });
+  };
+};
+
+const setDates = (dispatch) => {
+  return ({ start_date, end_date }) => {
+    dispatch({ type: "set_dates", payload: { start_date, end_date } });
+  };
+};
+
+const clearFilters = (dispatch) => {
+  return () => {
+    dispatch({ type: "clear_filters" });
+  };
+};
+
 export const { Provider, Context } = createDataContext(
   noticesReducer,
-  { getMessages },
-  { messages: [] }
+  { getMessages, getPinnedMessage, setLabelID, setDates, clearFilters },
+  {
+    params: {},
+    messages: [],
+    pinMessage : {}
+  }
 );

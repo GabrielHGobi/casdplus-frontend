@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { Context as NoticesContext } from "../context/NoticesContext";
 import { Overlay } from "react-native-elements";
-import DateInput from "../components/DateInput";
+import DateInput from "./DateInput";
 
-const DateButtonOverlay = ({
+const DateFilterOverlay = ({
   onBackdropPressFunction,
   changeInitialDate,
   ChangeFinalDate,
@@ -13,13 +14,12 @@ const DateButtonOverlay = ({
   checkChangeDate,
 }) => {
   const calendar_img = require("../../assets/ferramenta-de-simbolo-de-interface-de-calendario.png");
+  const { state, setDates } = useContext(NoticesContext);
   return (
     <>
       <Overlay
         isVisible={true}
-        onBackdropPress={() => {
-          onBackdropPressFunction(false);
-        }}
+        onBackdropPress={onBackdropPressFunction}
         overlayStyle={styles.overlay}>
         <Text style={styles.upperText}>Selecione as datas para filtrar:</Text>
         <View style={styles.dateContainer}>
@@ -96,4 +96,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DateButtonOverlay;
+export default DateFilterOverlay;
