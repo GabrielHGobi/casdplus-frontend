@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState, useContext, useEffect } from "react";
 import { RefreshControl,
          SafeAreaView, 
          ScrollView, 
@@ -11,6 +11,7 @@ import { RefreshControl,
 import {Agenda} from 'react-native-calendars';
 import {Card,Avatar} from 'react-native-paper';
 
+import { Context as CalendarContext } from "../context/CalendarContext";
 import Header from "../components/Header";
 
 const wait = (timeout) => {
@@ -21,6 +22,8 @@ const timeToString = (time) => {
   return date.toISOString().split('T')[0];
 };
 const CalendarScreen = () => {
+  // const { event, getEvents } = useContext(CalendarContext);
+
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
@@ -40,8 +43,7 @@ const CalendarScreen = () => {
           const numItems = Math.floor(Math.random() * 3);
           for (let j = 0; j < numItems; j++) {
             items[strTime].push({
-              name: 'Atividade de ' + strTime + ' #' + j,
-              height: Math.max(50, Math.floor(Math.random() * 150)),
+              name: 'Atividade ' + strTime + ' #' + j,
             });
           }
         }
@@ -50,6 +52,7 @@ const CalendarScreen = () => {
       Object.keys(items).forEach((key) => {
         newItems[key] = items[key];
       });
+      console.log(newItems);
       setItems(newItems);
     }, 1000);
   };
