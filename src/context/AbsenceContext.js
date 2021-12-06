@@ -15,14 +15,15 @@ const absenceReducer = (state, action) => {
 
 const sendAbsenceJustification = (dispatch) => {
   const { state } = useContext(AuthContext);
-  return async ({ date, justification, image }) => {
+  return async (formdata) => {
     try {
-      data = { date, justification, image };
+      data = formdata;
       console.log(data);
-      const response = await studentAPI.post("sendAbsence", {
+      const response = await studentAPI.post("/absence", {
         data,
         headers: {
           Authorization: `Bearer ${state.token}`,
+          'Content-Type': 'multipart/form-data',
         },
       });
       dispatch({
