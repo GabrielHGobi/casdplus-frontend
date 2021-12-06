@@ -50,7 +50,11 @@ const AbsenceScreen = () => {
           formdata.append("date", date);
           formdata.append("justification", justification);
           formdata.append("file", imageURI);
-          sendAbsenceJustification({ date, justification, image });
+          sendAbsenceJustification(formdata);
+          // setImageURI(null);
+          // setDate(new Date());
+          // setJustification("")
+
         }}
       />
     </View>

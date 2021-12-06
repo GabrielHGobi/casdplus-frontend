@@ -16,6 +16,7 @@ import { Provider as AuthProvider } from "./src/context/AuthContext";
 import { Provider as StudentProvider } from "./src/context/StudentContext";
 import { Provider as NoticesProvider } from "./src/context/NoticesContext";
 import { Provider as AbsenceProvider } from "./src/context/AbsenceContext";
+import { Provider as CalendarProvider } from "./src/context/CalendarContext";
 import { setNavigator } from "./src/navigationRef";
 
 const switchNavigator = createSwitchNavigator({
@@ -40,12 +41,14 @@ export default () => {
       <StudentProvider>
         <NoticesProvider>
           <AbsenceProvider>
+          <CalendarProvider>
             <StatusBar backgroundColor='#195967' />
-            <App
-              ref={(navigator) => {
-                setNavigator(navigator);
-              }}
-            />
+              <App
+                ref={(navigator) => {
+                  setNavigator(navigator);
+                }}
+              />
+          </CalendarProvider>
           </AbsenceProvider>
         </NoticesProvider>
       </StudentProvider>

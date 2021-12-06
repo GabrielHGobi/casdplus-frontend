@@ -1,6 +1,5 @@
 import React,{useState, useContext, useEffect } from "react";
 import { RefreshControl,
-         SafeAreaView, 
          ScrollView, 
          View, 
          StyleSheet, 
@@ -8,11 +7,20 @@ import { RefreshControl,
          TouchableOpacity,
          } from "react-native";
 
-import {Agenda} from 'react-native-calendars';
+import {Agenda, LocaleConfig} from 'react-native-calendars';
 import {Card,Avatar} from 'react-native-paper';
 
 import { Context as CalendarContext } from "../context/CalendarContext";
 import Header from "../components/Header";
+
+LocaleConfig.locales['pt'] = {
+  monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+  monthNamesShort: ['Jan.','Fev.','Mar.','Abr.','Maim','Jun.','Jul.','Ago.','Set.','Out.','Nov.','Dez.'],
+  dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+  dayNamesShort: ['Dom.','Seg.','Ter.','Qua.','Qui.','Sex.','Sab.'],
+  today: 'Hoje'
+};
+LocaleConfig.defaultLocale = 'pt';
 
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -22,8 +30,9 @@ const timeToString = (time) => {
   return date.toISOString().split('T')[0];
 };
 const CalendarScreen = () => {
-  // const { event, getEvents } = useContext(CalendarContext);
-
+  const { state, getEvents } = useContext(CalendarContext);
+  getEvents();
+  // console.log(state.events)
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
@@ -78,34 +87,39 @@ const CalendarScreen = () => {
   };
 
   return (
-    // <SafeAreaView style = {styles.container}>
-    //   <ScrollView
-    //       contentContainerStyle={styles.scrollView}
-    //       refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />  }
-    //     >
-    //       <Header title='Calendário do ano' />
+      <View
+          style={styles.container}
+        >
+          <Header title='Calendário dos ano' />
 
-          <SafeAreaView style={{flex: 1}}>
+          <ScrollView style={{width: "100%",}}
+          refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />  }
+          >
 
             <Agenda
               items={items}
               loadItemsForMonth={loadItems}
               selected={'2017-05-16'}
               renderItem={renderItem}
+              theme={{
+                backgroundColor: '#E2F6FE',
+                calendarBackground: '#ffffff',
+                dotColor: '#61CBF1',
+                selectedDayBackgroundColor:'#FBC979',
+              }}
             />
-          </SafeAreaView>
-    // </SafeAreaView>
+          </ScrollView>
+      </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: '#3192b3',
-    paddingHorizontal: 30,
   },
   scrollView: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: '#3192b3',
     alignItems: 'center',
   },
