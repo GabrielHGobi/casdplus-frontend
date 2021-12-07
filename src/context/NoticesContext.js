@@ -3,9 +3,6 @@ import createDataContext from "./createDataContext";
 import { Context as AuthContext } from "./AuthContext";
 import studentAPI from "../api/CASDplus_student";
 
-function isNotPinned(item) {
-  item.pin ? false : true;
-};
 
 const noticesReducer = (state, action) => {
   switch (action.type) {
@@ -42,10 +39,11 @@ const noticesReducer = (state, action) => {
 
 const getMessages = (dispatch) => {
   const { state } = useContext(AuthContext);
+  const token = state.token;
   return async (queryParams) => {
     try {
       response = await studentAPI.get("/messages", {
-        headers: { Authorization: `Bearer ${state.token}` },
+        headers: { Authorization: `Bearer ${token}` },
         params: queryParams,
       });
       dispatch({ type: "get_messages", payload: response.data });

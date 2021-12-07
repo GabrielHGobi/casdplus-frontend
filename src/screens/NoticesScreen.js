@@ -32,7 +32,7 @@ const NoticesScreen = ({ navigation }) => {
     getMessages(state.params);
     wait(250).then(() => setRefreshing(false));
   }, []);
-
+ 
   useEffect(() => {
     getPinnedMessage();
     getMessages(state.params);
@@ -43,7 +43,7 @@ const NoticesScreen = ({ navigation }) => {
     return () => {
       listener.remove();
     };
-  }, [state.params, state.messages]);
+  }, [state.params]);
 
   return (
     <>
@@ -74,7 +74,7 @@ const NoticesScreen = ({ navigation }) => {
             keyExtractor={(item) => String(item.id)}
             renderItem={({ item }) => <NoticeCard cardProps={item} />}
             onRefresh={onRefresh}
-            refreshing={refreshing}
+            refreshing={refreshing} 
             ListEmptyComponent={<NoticesListPlaceholder />}
           />
         </View>
