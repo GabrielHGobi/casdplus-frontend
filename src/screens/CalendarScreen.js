@@ -7,10 +7,11 @@ import {
          } from "react-native";
 
 import {Agenda, LocaleConfig} from 'react-native-calendars';
-import {Card,Avatar} from 'react-native-paper';
+
 
 import { Context as CalendarContext } from "../context/CalendarContext";
 import Header from "../components/Header";
+import AgendaCard from '../components/AgendaCard';
 
 LocaleConfig.locales['pt'] = {
   monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
@@ -46,25 +47,7 @@ const CalendarScreen = ({ navigation }) => {
   today =  yyyy+ '-'+  mm + '-' + dd ;
  
 
-  const renderItem = (item) => {
-    return (
-      <TouchableOpacity style={{marginRight: 10, marginTop: 17}}>
-        <Card>
-          <Card.Content>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}>
-              <Text>{item.name}</Text>
-              <Avatar.Text label="Z" />
-            </View>
-          </Card.Content>
-        </Card>
-      </TouchableOpacity>
-    );
-  };
+
 
   return (
       <View
@@ -76,7 +59,7 @@ const CalendarScreen = ({ navigation }) => {
               items={state.events}
               // loadItemsForMonth={loadItems}
               selected={today}
-              renderItem={renderItem}
+              renderItem={(item) => <AgendaCard name={item.name} description={item.description} />}
               theme={{
                 backgroundColor: '#E2F6FE',
                 calendarBackground: '#ffffff',
@@ -99,6 +82,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#3192b3',
     alignItems: 'center',
   },
+  
 });
 
 CalendarScreen.navigationOptions = () => {

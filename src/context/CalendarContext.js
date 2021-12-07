@@ -11,9 +11,8 @@ const eventsReducer = (state, action) => {
         if (typeof items[item.date] == 'undefined') {
           items[item.date] = [];
         }
-        items[item.date].push({name: item.name});
+        items[item.date].push({name: item.name, description: item.description});
       })
-      console.log(items);
       return { events: items };
     default:
       return state;
