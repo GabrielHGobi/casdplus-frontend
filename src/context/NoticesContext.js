@@ -13,7 +13,7 @@ const noticesReducer = (state, action) => {
       let messages =  action.payload.filter(function (message) {
         return !message.pin;
       })
-      messages.unshift(state.pinMessage);
+      if (state.pinMessage) messages.unshift(state.pinMessage);
       return { ...state, messages: messages};
     case "pin_message":
       return { ...state, pinMessage: action.payload };
