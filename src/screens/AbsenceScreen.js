@@ -16,8 +16,8 @@ const AbsenceScreen = () => {
   const [imageURI, setImageURI] = useState(null);
 
   const { sendAbsenceJustification } = useContext(AbsenceContext);
-  const createTwoButtonAlert = () =>
-    Alert.alert('Erro no Envio', 'Porfavor, preencha o Campo de Justificativa', [
+  const createTwoButtonAlert = (campo,mensagem) =>
+    Alert.alert('Erro no Envio', 'Por favor, preencha o Campo de '+ campo+'. '+ mensagem, [
     {
       text: 'Cancel',
       onPress: () => console.log('Cancel Pressed'),
@@ -30,6 +30,16 @@ const AbsenceScreen = () => {
     setJustification("");
     setImageURI(null);
     setDate(new Date());
+  };
+  const checkAlert = () => {
+    const now = new Date();
+    if (justification == ""){
+      createTwoButtonAlert('Justificativa','Esse campo não pode ser vazio.');
+    }else if(((now.getDay() == date.getDay())&& (now.getMonth() == date.getMonth()) && (now.getFullYear() == date.getFullYear()))){
+      createTwoButtonAlert('Data','A data não pode ser o dia de hoje');
+    } else {
+      sendAbscence()
+    };
   };
   return (
     <View style={styles.container}>
@@ -64,7 +74,7 @@ const AbsenceScreen = () => {
           formdata.append("date", date);
           formdata.append("justification", justification);
           formdata.append("file", imageURI);
-          justification == "" ? (createTwoButtonAlert()):(sendAbscence())
+          checkAlert()
 
         }}
       />
