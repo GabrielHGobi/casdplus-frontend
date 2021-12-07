@@ -32,39 +32,14 @@ const timeToString = (time) => {
 const CalendarScreen = () => {
   const { state, getEvents } = useContext(CalendarContext);
   getEvents();
-  // console.log(state.events)
-  const [refreshing, setRefreshing] = React.useState(false);
 
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    wait(2000).then(() => setRefreshing(false));
-  }, []);
+  let today = new Date();
+  let dd = String(today.getDate()).padStart(2, '0');
+  let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  let yyyy = today.getFullYear();
 
-  const [items, setItems] = useState({});
-
-  const loadItems = (day) => {
-    setTimeout(() => {
-      for (let i = -15; i < 85; i++) {
-        const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-        const strTime = timeToString(time);
-        if (!items[strTime]) {
-          items[strTime] = [];
-          const numItems = Math.floor(Math.random() * 3);
-          for (let j = 0; j < numItems; j++) {
-            items[strTime].push({
-              name: 'Atividade ' + strTime + ' #' + j,
-            });
-          }
-        }
-      }
-      const newItems = {};
-      Object.keys(items).forEach((key) => {
-        newItems[key] = items[key];
-      });
-      console.log(newItems);
-      setItems(newItems);
-    }, 1000);
-  };
+  today =  yyyy+ '-'+  mm + '-' + dd ;
+ 
 
   const renderItem = (item) => {
     return (
@@ -91,15 +66,11 @@ const CalendarScreen = () => {
           style={styles.container}
         >
           <Header title='Calendário dos ano' />
-
-          <ScrollView style={{width: "100%",}}
-          refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />  }
-          >
-
+          <View style={{flex: 1,width:'100%'}}>
             <Agenda
-              items={items}
-              loadItemsForMonth={loadItems}
-              selected={'2017-05-16'}
+              items={state}
+              // loadItemsForMonth={loadItems}
+              selected={today}
               renderItem={renderItem}
               theme={{
                 backgroundColor: '#E2F6FE',
@@ -108,14 +79,14 @@ const CalendarScreen = () => {
                 selectedDayBackgroundColor:'#FBC979',
               }}
             />
-          </ScrollView>
+          </View>
       </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     backgroundColor: '#3192b3',
   },
   scrollView: {

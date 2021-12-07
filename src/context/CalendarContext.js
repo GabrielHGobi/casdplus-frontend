@@ -7,7 +7,14 @@ import studentAPI from "../api/CASDplus_student";
 const eventsReducer = (state, action) => {
   switch (action.type) {
     case "get_events":
-      return { ...state, events: action.payload };
+      const items = {};
+      state.events.map((item)=>{
+        if (typeof items[item.date] == 'undefined') {
+          items[item.date] = [];
+        }
+        items[item.date].push({name: item.name});
+      })
+      return { ...items, events: action.payload };
     default:
       return state;
   }
