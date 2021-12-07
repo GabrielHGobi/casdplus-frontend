@@ -10,6 +10,10 @@
       "resizeMode": "contain",
       "backgroundColor": "#3193b3"
     },
+    "notification": {
+      "icon": "./assets/notification-icon.png",
+      "color": "#ffffff"
+    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -22,7 +26,7 @@
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
-      ]
+      ], 
     ],
     "ios": {
       "supportsTablet": true,
