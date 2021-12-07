@@ -1,20 +1,20 @@
 import { useContext } from "react";
 import createDataContext from "./createDataContext";
 import { Context as AuthContext } from "./AuthContext";
-import { navigate } from "../navigationRef";
 import studentAPI from "../api/CASDplus_student";
 
 const eventsReducer = (state, action) => {
   switch (action.type) {
     case "get_events":
       const items = {};
-      state.events.map((item)=>{
+      action.payload.map((item)=>{
         if (typeof items[item.date] == 'undefined') {
           items[item.date] = [];
         }
         items[item.date].push({name: item.name});
       })
-      return { ...items, events: action.payload };
+      console.log(items);
+      return { events: items };
     default:
       return state;
   }
@@ -37,5 +37,5 @@ const getEvents = (dispatch) => {
 export const { Provider, Context } = createDataContext(
   eventsReducer,
   { getEvents },
-  { events: [] }
+  { events: {} }
 );

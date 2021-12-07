@@ -1,6 +1,5 @@
 import React,{useState, useContext, useEffect } from "react";
-import { RefreshControl,
-         ScrollView, 
+import {
          View, 
          StyleSheet, 
          Text,
@@ -22,16 +21,22 @@ LocaleConfig.locales['pt'] = {
 };
 LocaleConfig.defaultLocale = 'pt';
 
-const wait = (timeout) => {
-  return new Promise(resolve => setTimeout(resolve, timeout));
-}
-const timeToString = (time) => {
-  const date = new Date(time);
-  return date.toISOString().split('T')[0];
-};
-const CalendarScreen = () => {
+
+
+const CalendarScreen = ({ navigation }) => {
   const { state, getEvents } = useContext(CalendarContext);
-  getEvents();
+
+  useEffect(() => {
+    getEvents();
+    const listener = navigation.addListener("didFocus", () => {
+      getEvents(state.params);
+    });
+    return () => {
+      listener.remove();
+    };
+  }, []);
+  
+  console.log(state);
 
   let today = new Date();
   let dd = String(today.getDate()).padStart(2, '0');
@@ -65,10 +70,10 @@ const CalendarScreen = () => {
       <View
           style={styles.container}
         >
-          <Header title='Calendário dos ano' />
+          <Header title='Calendário do ano' />
           <View style={{flex: 1,width:'100%'}}>
             <Agenda
-              items={state}
+              items={state.events}
               // loadItemsForMonth={loadItems}
               selected={today}
               renderItem={renderItem}
