@@ -15,10 +15,10 @@ const absenceReducer = (state, action) => {
 
 const sendAbsenceJustification = (dispatch) => {
   const { state } = useContext(AuthContext);
-  return async (formdata) => {
+  return async (data) => {
     try {
-      data = formdata;
       console.log(data);
+      console.log(state.token);
       const response = await studentAPI.post("/absence", {
         data,
         headers: {

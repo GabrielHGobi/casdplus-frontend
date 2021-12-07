@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Alert} from "react-native";
 import PaintButton from "../components/PaintButton";
 import Header from "../components/Header";
 import FormInput from "../components/FormInput";
@@ -16,7 +16,21 @@ const AbsenceScreen = () => {
   const [imageURI, setImageURI] = useState(null);
 
   const { sendAbsenceJustification } = useContext(AbsenceContext);
-
+  const createTwoButtonAlert = () =>
+    Alert.alert('Erro no Envio', 'Porfavor, preencha o Campo de Justificativa', [
+    {
+      text: 'Cancel',
+      onPress: () => console.log('Cancel Pressed'),
+      style: 'cancel',
+    },
+    { text: 'OK', onPress: () => console.log('OK Pressed') },
+    ]);
+  const sendAbscence = () => {
+    sendAbsenceJustification(formdata);
+    setJustification("");
+    setImageURI(null);
+    setDate(new Date());
+  };
   return (
     <View style={styles.container}>
       <Header title='Justificativa de faltas' />
@@ -50,10 +64,7 @@ const AbsenceScreen = () => {
           formdata.append("date", date);
           formdata.append("justification", justification);
           formdata.append("file", imageURI);
-          sendAbsenceJustification(formdata);
-          // setImageURI(null);
-          // setDate(new Date());
-          // setJustification("")
+          justification == "" ? (createTwoButtonAlert()):(sendAbscence())
 
         }}
       />
