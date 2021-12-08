@@ -21,10 +21,11 @@ const eventsReducer = (state, action) => {
 
 const getEvents = (dispatch) => {
   const { state } = useContext(AuthContext);
+  const token = state.token;
   return async () => {
     try {
       response = await studentAPI.get("/events", {
-        headers: { Authorization: `Bearer ${state.token}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
       dispatch({ type: "get_events", payload: response.data });
     } catch (err) {

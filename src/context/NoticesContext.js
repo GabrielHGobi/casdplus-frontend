@@ -56,10 +56,11 @@ const getMessages = (dispatch) => {
 
 const getPinnedMessage = (dispatch) => {
   const { state } = useContext(AuthContext);
+  const token = state.token;
   return async () => {
     try {
       response = await studentAPI.get("/messages", {
-        headers: { Authorization: `Bearer ${state.token}` }
+        headers: { Authorization: `Bearer ${token}` }
       });
       let pinned_msg = response.data.find(item => item.pin === true);
       dispatch({ type: "pin_message", payload: pinned_msg });

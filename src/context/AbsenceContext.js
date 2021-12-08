@@ -15,6 +15,7 @@ const absenceReducer = (state, action) => {
 
 const sendAbsenceJustification = (dispatch) => {
   const { state } = useContext(AuthContext);
+  const token = state.token;
   return async (data) => {
     try {
       console.log(data);
@@ -24,7 +25,7 @@ const sendAbsenceJustification = (dispatch) => {
         method: 'post',
         body: data,
         headers: {
-          Authorization: `Bearer ${state.token}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
         },
       });

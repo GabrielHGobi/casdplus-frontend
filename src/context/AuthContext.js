@@ -72,8 +72,11 @@ const signout = (dispatch) => async () => {
     dispatch({ type: "signout" });
     navigate("Login");
   } catch (err) {
-    console.log(err.message);
+    console.log(err.message); 
   }
+  await AsyncStorage.removeItem("token");
+    dispatch({ type: "signout" });
+    navigate("Login");
 };
 
 const clearErrorMessage = (dispatch) => () => {
