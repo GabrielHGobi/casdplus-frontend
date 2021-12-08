@@ -40,7 +40,6 @@ const noticesReducer = (state, action) => {
 const getMessages = (dispatch) => {
   const { state } = useContext(AuthContext);
   const token = state.token;
-  console.log(token);
   return async (queryParams) => {
     try {
       response = await studentAPI.get("/messages", {

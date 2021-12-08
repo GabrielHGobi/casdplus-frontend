@@ -18,9 +18,6 @@ const sendAbsenceJustification = (dispatch) => {
   const token = state.token;
   return async (data) => {
     try {
-      console.log(data);
-      console.log(state.token);
-      
       const response = await fetch("https://casdplus.herokuapp.com/student/absence",{
         method: 'post',
         body: data,
@@ -35,7 +32,6 @@ const sendAbsenceJustification = (dispatch) => {
       });
     } catch (err) {
       console.log(err.message);
-      console.log(response)
     }
   };
 };
