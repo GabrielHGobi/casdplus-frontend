@@ -49,7 +49,7 @@ const signin =
       const response = await studentAPI.post("/login", { username, password });
       await AsyncStorage.setItem("token", response.data.token);
       dispatch({
-        type: "signup",
+        type: "signin",
         payload: response.data.token,
       });
       getStudentInfo({ token: response.data.token });
