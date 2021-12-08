@@ -19,8 +19,10 @@ const sendAbsenceJustification = (dispatch) => {
     try {
       console.log(data);
       console.log(state.token);
-      const response = await studentAPI.post("/absence", {
-        data,
+      
+      const response = await fetch("https://casdplus.herokuapp.com/student/absence",{
+        method: 'post',
+        body: data,
         headers: {
           Authorization: `Bearer ${state.token}`,
           'Content-Type': 'multipart/form-data',
@@ -32,6 +34,7 @@ const sendAbsenceJustification = (dispatch) => {
       });
     } catch (err) {
       console.log(err.message);
+      console.log(response)
     }
   };
 };

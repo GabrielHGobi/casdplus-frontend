@@ -71,11 +71,14 @@ const AbsenceScreen = () => {
         primaryColor='#f9b342'
         secundaryColor='#3192b3'
         onPress={() => {
-          formdata.append("date", date);
+          formdata.append("date",date.toISOString().split('T')[0]);
           formdata.append("justification", justification);
-          formdata.append("file", imageURI);
+          formdata.append("file", {
+            uri: imageURI,
+            type: 'image/jpeg',
+            name: 'teste'
+        });
           checkAlert()
-
         }}
       />
     </View>
