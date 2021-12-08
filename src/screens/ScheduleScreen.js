@@ -23,11 +23,7 @@ const ScheduleScreen = () => {
   const { state} = useContext(AuthContext);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView
-          contentContainerStyle={styles.scrollView}
-          refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />  }
-        >
+    <View style={styles.container}>
         <Header title='Cronograma de aulas' />
         <PDFReader
           source={{
@@ -47,8 +43,7 @@ const ScheduleScreen = () => {
           }}
           withPinchZoom={true}
         />
-      </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
