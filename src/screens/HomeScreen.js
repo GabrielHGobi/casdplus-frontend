@@ -44,6 +44,14 @@ const cardProps = [
     img: require("../../assets/absence_img.png"),
     navScreen: "Absence",
   },
+  {
+    id: "5",
+    title: "Formulário",
+    subtitle: "Preencha o Formulário aberto",
+    img: require("../../assets/absence_img.png"),
+    navScreen: "Form"
+
+  },
 ];
 
 const HomeScreen = ({ navigation }) => {
@@ -98,6 +106,7 @@ const styles = StyleSheet.create({
   paint: {
     marginVertical: 20,
   },
+
 });
 
 export default HomeScreen;

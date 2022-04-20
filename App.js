@@ -11,7 +11,9 @@ import ScheduleScreen from "./src/screens/ScheduleScreen";
 import NoticesScreen from "./src/screens/NoticesScreen";
 import CalendarScreen from "./src/screens/CalendarScreen";
 import MessageScreen from "./src/screens/MessageScreen";
+import FormScreen from "./src/screens/FormScreen";
 
+import { Provider as FormProvider } from "./src/context/FormContext";
 import { Provider as AuthProvider } from "./src/context/AuthContext";
 import { Provider as StudentProvider } from "./src/context/StudentContext";
 import { Provider as NoticesProvider } from "./src/context/NoticesContext";
@@ -30,6 +32,7 @@ const switchNavigator = createSwitchNavigator({
     Calendar: CalendarScreen,
     Notices: NoticesScreen,
     Message: MessageScreen,
+    Form: FormScreen,
   }),
 });
 
@@ -41,14 +44,16 @@ export default () => {
       <StudentProvider>
         <NoticesProvider>
           <AbsenceProvider>
-          <CalendarProvider>
-            <StatusBar backgroundColor='#195967' />
-              <App
-                ref={(navigator) => {
-                  setNavigator(navigator);
-                }}
-              />
-          </CalendarProvider>
+            <CalendarProvider>
+              <FormProvider>
+                <StatusBar backgroundColor='#195967' />
+                  <App
+                    ref={(navigator) => {
+                      setNavigator(navigator);
+                    }}
+                  />
+              </FormProvider>
+            </CalendarProvider>
           </AbsenceProvider>
         </NoticesProvider>
       </StudentProvider>
